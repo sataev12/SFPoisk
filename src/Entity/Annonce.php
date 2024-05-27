@@ -23,11 +23,15 @@ class Annonce
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateCreation = null;
 
-    #[ORM\Column(length: 200)]
+    #[ORM\Column(length: 255)]
     private ?string $ville = null;
 
     #[ORM\Column]
     private ?int $prix = null;
+
+    #[ORM\ManyToOne(inversedBy: 'annonces')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Utilisateur $publier = null;
 
     public function getId(): ?int
     {
@@ -90,6 +94,18 @@ class Annonce
     public function setPrix(int $prix): static
     {
         $this->prix = $prix;
+
+        return $this;
+    }
+
+    public function getPublier(): ?Utilisateur
+    {
+        return $this->publier;
+    }
+
+    public function setPublier(?Utilisateur $publier): static
+    {
+        $this->publier = $publier;
 
         return $this;
     }
