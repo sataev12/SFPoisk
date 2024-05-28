@@ -33,9 +33,23 @@ class Utilisateur
     #[ORM\OneToMany(targetEntity: Annonce::class, mappedBy: 'publier', orphanRemoval: true)]
     private Collection $annonces;
 
+    /**
+     * @var Collection<int, Message>
+     */
+    #[ORM\OneToMany(targetEntity: Message::class, mappedBy: 'expediteur')]
+    private Collection $messages;
+
+    /**
+     * @var Collection<int, Message>
+     */
+    #[ORM\OneToMany(targetEntity: Message::class, mappedBy: 'destinataire', orphanRemoval: true)]
+    private Collection $messageRecu;
+
     public function __construct()
     {
         $this->annonces = new ArrayCollection();
+        $this->messages = new ArrayCollection();
+        $this->messageRecu = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -115,6 +129,66 @@ class Utilisateur
             // set the owning side to null (unless already changed)
             if ($annonce->getPublier() === $this) {
                 $annonce->setPublier(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Message>
+     */
+    public function getMessages(): Collection
+    {
+        return $this->messages;
+    }
+
+    public function addMessage(Message $message): static
+    {
+        if (!$this->messages->contains($message)) {
+            $this->messages->add($message);
+            $message->setExpediteur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessage(Message $message): static
+    {
+        if ($this->messages->removeElement($message)) {
+            // set the owning side to null (unless already changed)
+            if ($message->getExpediteur() === $this) {
+                $message->setExpediteur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Message>
+     */
+    public function getMessageRecu(): Collection
+    {
+        return $this->messageRecu;
+    }
+
+    public function addMessageRecu(Message $messageRecu): static
+    {
+        if (!$this->messageRecu->contains($messageRecu)) {
+            $this->messageRecu->add($messageRecu);
+            $messageRecu->setDestinataire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessageRecu(Message $messageRecu): static
+    {
+        if ($this->messageRecu->removeElement($messageRecu)) {
+            // set the owning side to null (unless already changed)
+            if ($messageRecu->getDestinataire() === $this) {
+                $messageRecu->setDestinataire(null);
             }
         }
 

@@ -20,6 +20,14 @@ class Message
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateEnvoi = null;
 
+    #[ORM\ManyToOne(inversedBy: 'messages')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Utilisateur $expediteur = null;
+
+    #[ORM\ManyToOne(inversedBy: 'messageRecu')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Utilisateur $destinataire = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -45,6 +53,30 @@ class Message
     public function setDateEnvoi(\DateTimeInterface $dateEnvoi): static
     {
         $this->dateEnvoi = $dateEnvoi;
+
+        return $this;
+    }
+
+    public function getExpediteur(): ?Utilisateur
+    {
+        return $this->expediteur;
+    }
+
+    public function setExpediteur(?Utilisateur $expediteur): static
+    {
+        $this->expediteur = $expediteur;
+
+        return $this;
+    }
+
+    public function getDestinataire(): ?Utilisateur
+    {
+        return $this->destinataire;
+    }
+
+    public function setDestinataire(?Utilisateur $destinataire): static
+    {
+        $this->destinataire = $destinataire;
 
         return $this;
     }
