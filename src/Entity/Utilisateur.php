@@ -45,11 +45,18 @@ class Utilisateur
     #[ORM\OneToMany(targetEntity: Message::class, mappedBy: 'destinataire', orphanRemoval: true)]
     private Collection $messageRecu;
 
+    /**
+     * @var Collection<int, Signalement>
+     */
+    #[ORM\OneToMany(targetEntity: Signalement::class, mappedBy: 'utilisateur')]
+    private Collection $signalements;
+
     public function __construct()
     {
         $this->annonces = new ArrayCollection();
         $this->messages = new ArrayCollection();
         $this->messageRecu = new ArrayCollection();
+        $this->signalements = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -189,6 +196,36 @@ class Utilisateur
             // set the owning side to null (unless already changed)
             if ($messageRecu->getDestinataire() === $this) {
                 $messageRecu->setDestinataire(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Signalement>
+     */
+    public function getSignalements(): Collection
+    {
+        return $this->signalements;
+    }
+
+    public function addSignalement(Signalement $signalement): static
+    {
+        if (!$this->signalements->contains($signalement)) {
+            $this->signalements->add($signalement);
+            $signalement->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSignalement(Signalement $signalement): static
+    {
+        if ($this->signalements->removeElement($signalement)) {
+            // set the owning side to null (unless already changed)
+            if ($signalement->getUtilisateur() === $this) {
+                $signalement->setUtilisateur(null);
             }
         }
 
