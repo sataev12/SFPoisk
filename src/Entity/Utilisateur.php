@@ -51,12 +51,19 @@ class Utilisateur
     #[ORM\OneToMany(targetEntity: Signalement::class, mappedBy: 'utilisateur')]
     private Collection $signalements;
 
+    /**
+     * @var Collection<int, Commentaire>
+     */
+    #[ORM\OneToMany(targetEntity: Commentaire::class, mappedBy: 'utilisateur')]
+    private Collection $commentaires;
+
     public function __construct()
     {
         $this->annonces = new ArrayCollection();
         $this->messages = new ArrayCollection();
         $this->messageRecu = new ArrayCollection();
         $this->signalements = new ArrayCollection();
+        $this->commentaires = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -226,6 +233,36 @@ class Utilisateur
             // set the owning side to null (unless already changed)
             if ($signalement->getUtilisateur() === $this) {
                 $signalement->setUtilisateur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commentaire>
+     */
+    public function getCommentaires(): Collection
+    {
+        return $this->commentaires;
+    }
+
+    public function addCommentaire(Commentaire $commentaire): static
+    {
+        if (!$this->commentaires->contains($commentaire)) {
+            $this->commentaires->add($commentaire);
+            $commentaire->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaire(Commentaire $commentaire): static
+    {
+        if ($this->commentaires->removeElement($commentaire)) {
+            // set the owning side to null (unless already changed)
+            if ($commentaire->getUtilisateur() === $this) {
+                $commentaire->setUtilisateur(null);
             }
         }
 
