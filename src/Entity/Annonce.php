@@ -47,10 +47,21 @@ class Annonce
     #[ORM\OneToMany(targetEntity: Signalement::class, mappedBy: 'annonce', orphanRemoval: true)]
     private Collection $signalements;
 
+    /**
+     * @var Collection<int, Photo>
+     */
+    #[ORM\OneToMany(targetEntity: Photo::class, mappedBy: 'annonce')]
+    private Collection $photos;
+
+    #[ORM\ManyToOne(inversedBy: 'annonce')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Categorie $categorie = null;
+
     public function __construct()
     {
         $this->commentaire = new ArrayCollection();
         $this->signalements = new ArrayCollection();
+        $this->photos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -186,6 +197,48 @@ class Annonce
                 $signalement->setAnnonce(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Photo>
+     */
+    public function getPhotos(): Collection
+    {
+        return $this->photos;
+    }
+
+    public function addPhoto(Photo $photo): static
+    {
+        if (!$this->photos->contains($photo)) {
+            $this->photos->add($photo);
+            $photo->setAnnonce($this);
+        }
+
+        return $this;
+    }
+
+    public function removePhoto(Photo $photo): static
+    {
+        if ($this->photos->removeElement($photo)) {
+            // set the owning side to null (unless already changed)
+            if ($photo->getAnnonce() === $this) {
+                $photo->setAnnonce(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCategorie(): ?Categorie
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(?Categorie $categorie): static
+    {
+        $this->categorie = $categorie;
 
         return $this;
     }
