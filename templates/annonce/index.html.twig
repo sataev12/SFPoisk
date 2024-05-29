@@ -4,4 +4,8 @@
 
 {% block body %}
     <h1>Liste des annonces</h1>
+
+    {% for annonce in annonces %}
+        {{ annonce.titre }} <br>
+    {% endfor %}   
 {% endblock %}
