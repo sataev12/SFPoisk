@@ -15,7 +15,8 @@ class AnnonceController extends AbstractController
     public function index(AnnonceRepository $annonceRepository): Response
     {
         // $annonces = $entityManager->getRepository(Annonce::class)->findAll();
-        $annonces = $annonceRepository->findAll();
+        // $annonces = $annonceRepository->findAll();
+        $annonces = $annonceRepository->findBy([], ["dateCreation" => "DESC"]);
         return $this->render('annonce/index.html.twig', [
             'annonces' => $annonces
         ]);
