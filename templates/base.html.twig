@@ -12,6 +12,13 @@
         {% endblock %}
     </head>
     <body>
+        <nav>
+            <ul>
+                <li><a href="">Déposer une annonce</a></li>
+                <li><a href="{{ path('app_message') }}">Mes messages</a></li>
+                <li><a href="{{ path('app_annonce') }}">Mes annonces</a></li>
+            </ul>
+        </nav>
         {% block body %}{% endblock %}
     </body>
 </html>

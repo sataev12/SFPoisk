@@ -80,4 +80,9 @@ class Message
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->contenu.' (Envoyé par :'.$this->getExpediteur()->getNom().')' ;
+    }
 }
