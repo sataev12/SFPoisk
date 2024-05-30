@@ -21,4 +21,12 @@ class AnnonceController extends AbstractController
             'annonces' => $annonces
         ]);
     }
+
+    #[Route('/annonce/{id}', name: 'show_annonce')]
+    public function show(Annonce $annonce): Response
+    {
+        return $this->render('annonce/show.html.twig', [
+            'annonce' => $annonce
+        ]);
+    }
 }

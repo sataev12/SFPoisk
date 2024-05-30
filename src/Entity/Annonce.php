@@ -245,6 +245,6 @@ class Annonce
 
     public function __toString()
     {
-        return $this->titre.' ('.$this->description.' '.$this->ville.' '.$this->prix.')';
+        return $this->titre;
     }
 }
