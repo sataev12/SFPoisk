@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\UtilisateurRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\Annonce;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UtilisateurRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
 class Utilisateur
@@ -271,6 +272,9 @@ class Utilisateur
 
     public function __toString()
     {
-        return $this->nom.' '.$this->email;
+        $annonceTitre = $this->getAnnonces()->map(function(Annonce $annonce){
+            return $annonce->getTitre();
+        })->toArray();
+        return $this->nom.' '.implode(', ', $annonceTitre);
     }
 }
