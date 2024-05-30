@@ -270,6 +270,18 @@ class Utilisateur
         return $this;
     }
 
+    public function getCommentairesLaisse(): array
+    {
+        return $this->getCommentaires()->map(function(Commentaire $commentaireRecup){
+            return $commentaireRecup->getContenu();
+        })->toArray();
+    }
+
+    public function getAnnoncePublie(): array
+    {
+        return $this->getAnnonces()->toArray();
+    }
+
     public function __toString()
     {
         $annonceTitre = $this->getAnnonces()->map(function(Annonce $annonce){

@@ -6,7 +6,7 @@
     <h1>Liste des utilisateurs</h1>
 
     {% for utilisateur in utilisateurs %}
-        {{utilisateur}} <br>
+        <a href="{{ path('show_utilisateur', {'id': utilisateur.id})}}">{{utilisateur}}</a> <br>
     {% endfor %}
 
 {% endblock %}
