@@ -20,7 +20,7 @@
             Les annonces publiées : {% for annonce in utilisateur.getAnnoncePublie() %}
             <li><a href="{{ path('show_annonce', {'id': annonce.id}) }}">{{ annonce }}</a></li>
         {% else %}
-            <li>Aucun commentaire trouvé.</li>
+            <li>Aucune annonces trouvé.</li>
         {% endfor %}
     </p>
 {% endblock %}
