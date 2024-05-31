@@ -17,3 +17,7 @@ nav{
 nav ul{
     display: flex;
 }
+nav ul h2{
+    color: white;
+}
+
