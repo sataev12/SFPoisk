@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Utilisateur;
+use App\Form\UtilisateurType;
 use App\Repository\UtilisateurRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class UtilisateurController extends AbstractController
 {
@@ -16,6 +18,17 @@ class UtilisateurController extends AbstractController
         $utilisateurs = $utilisateurRepository->findAll();
         return $this->render('utilisateur/index.html.twig', [
             'utilisateurs' => $utilisateurs
+        ]);
+    }
+
+    #[Route('/utilisateur/new', name: 'new_utilisateur')]
+    public function new(Request $request): Response
+    {
+        $utilisateur = new Utilisateur();
+        $form = $this->createForm(UtilisateurType::class, $utilisateur);
+
+        return $this->render('utilisateur/new.html.twig', [
+            'formAddUtilisateur' => $form,
         ]);
     }
 
