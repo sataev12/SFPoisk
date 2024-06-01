@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Annonce;
+use App\Entity\Commentaire;
 use App\Form\AnnonceType;
 use App\Repository\AnnonceRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -39,8 +40,10 @@ class AnnonceController extends AbstractController
     #[Route('/annonce/{id}', name: 'show_annonce')]
     public function show(Annonce $annonce): Response
     {
+        $commentaires = $annonce->getCommentaire();
         return $this->render('annonce/show.html.twig', [
-            'annonce' => $annonce
+            'annonce' => $annonce,
+            'commentaires' => $commentaires,
         ]);
     }
 

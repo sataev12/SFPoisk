@@ -10,6 +10,13 @@
         Ville : {{ annonce.ville }} <br>
         Prix : {{ annonce.prix }} <br>
         Description : {{ annonce.description }} <br>
-        Date création : {{ annonce.dateCreation|date('d.m.Y H:i:s') }}
+        Date création : {{ annonce.dateCreation|date('d.m.Y H:i:s') }} <br>
+        <h2>Commentaires :</h2>
+            {% for commentaire in commentaires %}
+                <strong>{{ commentaire.utilisateur.nom }} :</strong> {{ commentaire.contenu }} <br>
+                <small>{{ commentaire.dateCreation|date('d-m-Y H:i') }}</small>
+            {% else %}
+                Aucun commentaire pour cette annonce.    
+            {% endfor %}
     </p>
 {% endblock %}
