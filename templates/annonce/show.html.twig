@@ -14,7 +14,7 @@
         <h2>Commentaires :</h2>
             {% for commentaire in commentaires %}
                 <strong>{{ commentaire.utilisateur.nom }} :</strong> {{ commentaire.contenu }} <br>
-                <small>{{ commentaire.dateCreation|date('d-m-Y H:i') }}</small>
+                <small>{{ commentaire.dateCreation|date('d-m-Y H:i') }}</small> <br>
             {% else %}
                 Aucun commentaire pour cette annonce.    
             {% endfor %}

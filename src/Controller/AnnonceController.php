@@ -46,6 +46,7 @@ class AnnonceController extends AbstractController
         // Créer et gérer le formulaire de commentaire
         $commentaire = new Commentaire();
         $commentaire->setAnnonce($annonce);// Associer le commentaire à l'annonce
+        $commentaire->setDateCreation(new \DateTime()); // Régler automatiquement la date de création à aujourd'hui
 
         $form = $this->createForm(CommentaireType::class, $commentaire);
 
