@@ -18,5 +18,11 @@
             {% else %}
                 Aucun commentaire pour cette annonce.    
             {% endfor %}
+        <h2>Ajouter un commentaire :</h2>
+        {{ form_start(formCommentaire) }}
+            {{ form_row(formCommentaire.contenu) }}
+            {# Les champs "annonce" et "utilisateur" ne sont pas nécessaires dans le formulaire car ils sont définis en backend #}
+            <button type="submit">Ajouter</button>
+        {{ form_end(formCommentaire) }}    
     </p>
 {% endblock %}

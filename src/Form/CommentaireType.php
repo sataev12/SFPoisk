@@ -19,13 +19,13 @@ class CommentaireType extends AbstractType
             ->add('dateCreation', null, [
                 'widget' => 'single_text',
             ])
-            ->add('annonce', EntityType::class, [
-                'class' => Annonce::class,
-                'choice_label' => 'id',
-            ])
+            // ->add('annonce', EntityType::class, [
+            //     'class' => Annonce::class,
+            //     'choice_label' => 'id',
+            // ])
             ->add('utilisateur', EntityType::class, [
                 'class' => Utilisateur::class,
-                'choice_label' => 'id',
+                'choice_label' => 'nom',
             ])
         ;
     }
