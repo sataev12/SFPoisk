@@ -28,10 +28,22 @@ class AnnonceController extends AbstractController
     }
 
     #[Route('/annonce/new', name: 'new_annonce')]
-    public function new(Request $request): Response
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $annonce = new Annonce();
+        $annonce->setDateCreation(new \DateTime()); // Régler automatiquement la date de création à aujourd'hui
         $form = $this->createForm(AnnonceType::class, $annonce);
+
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()) {
+            $annonce = $form->getData();
+            // Prepare PDO
+            $entityManager->persist($annonce);
+            // execute PDO
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_annonce');
+        }
 
         return $this->render('annonce/new.html.twig', [
             'formAddAnnonce' => $form,

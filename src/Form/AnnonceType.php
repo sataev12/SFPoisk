@@ -23,7 +23,7 @@ class AnnonceType extends AbstractType
         $builder
             ->add('titre', TextType::class)
             ->add('description', TextareaType::class)
-            ->add('dateCreation', DateType::class )
+            // ->add('dateCreation', DateType::class )
             ->add('ville', TextType::class)
             ->add('prix', IntegerType::class)
             ->add('publier', EntityType::class, [
