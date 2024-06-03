@@ -19,11 +19,14 @@
         </div>
     {% endif %}
         <a href="{{ path('edit_annonce', {'id': annonce.id})}}">Modifier</a>
+        <a href="{{ path('delete_annonce', {'id': annonce.id}) }}">Supprimer</a>
         <h2>Commentaires :</h2>
             {% for commentaire in commentaires %}
                 <strong>{{ commentaire.utilisateur.nom }} :</strong> {{ commentaire.contenu }} <br>
                 <small>{{ commentaire.dateCreation|date('d-m-Y H:i') }}</small> <br>
-                <a href="{{ path('edit_commentaire', {'id': commentaire.id}) }}">Edit</a> <br>
+                <a href="{{ path('edit_commentaire', {'id': commentaire.id}) }}">Edit</a>
+                <a href="{{ path('delete_commentaire', {'id': commentaire.id}) }}">supprimer</a> <br>
+                
             {% else %}
                 Aucun commentaire pour cette annonce.    
             {% endfor %}

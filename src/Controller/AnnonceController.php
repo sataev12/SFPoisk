@@ -82,6 +82,16 @@ class AnnonceController extends AbstractController
         ]);
     }
 
+    #[Route('/annonce/{id}/delete', name: 'delete_annonce')]
+    public function delete(Annonce $annonce, EntityManagerInterface $entityManager)
+    {
+        $entityManager->remove($annonce);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_annonce');
+    }
+
+
     #[Route('/annonce/{id}', name: 'show_annonce')]
     public function show(Annonce $annonce, Request $request, EntityManagerInterface $entityManager): Response
     {
