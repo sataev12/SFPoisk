@@ -28,9 +28,14 @@ class AnnonceController extends AbstractController
     }
 
     #[Route('/annonce/new', name: 'new_annonce')]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/annonce/{id}/edit', name: 'edit_annonce')]
+    public function new_edit(Annonce $annonce = null, Request $request, EntityManagerInterface $entityManager): Response
     {
-        $annonce = new Annonce();
+
+        if(!$annonce){
+            $annonce = new Annonce();
+        }
+        
         $annonce->setDateCreation(new \DateTime()); // Régler automatiquement la date de création à aujourd'hui
         $form = $this->createForm(AnnonceType::class, $annonce);
 
@@ -39,6 +44,11 @@ class AnnonceController extends AbstractController
             $annonce = $form->getData();
             // Prepare PDO
             $entityManager->persist($annonce);
+
+            // Gerer le téléchargement des images
+            $imageFiles = $form->get('images')->getData();
+
+
             // execute PDO
             $entityManager->flush();
 
@@ -47,6 +57,7 @@ class AnnonceController extends AbstractController
 
         return $this->render('annonce/new.html.twig', [
             'formAddAnnonce' => $form,
+            'edit' => $annonce->getId()
         ]);
     }
 

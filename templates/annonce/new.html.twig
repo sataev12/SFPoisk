@@ -3,7 +3,28 @@
 {% block title %}Ajouter une annonce!{% endblock %}
 
 {% block body %}
-    <h1>Ajouter une annonce</h1>
+    {% if edit %}
+        <h1>Editer une annonce</h1>
+    {% else %}
+        <h1>Ajouter une annonce</h1>
+    {% endif %}
 
-    {{ form (formAddAnnonce)}} 
+    {# {{ form (formAddAnnonce)}}  #}
+
+    {{ form_start(formAddAnnonce) }}
+        <div class="row">
+            <div class="col-sm">
+                {{ form_row(formAddAnnonce.titre)}}
+            </div>
+            <div class="col-sm">
+                {{ form_row(formAddAnnonce.ville)}}
+            </div>
+        </div>
+        {{ form_row(formAddAnnonce.prix)}}
+        {{ form_row(formAddAnnonce.description)}}
+        {{ form_row(formAddAnnonce.publier)}}
+        {{ form_row(formAddAnnonce.categorie)}}
+        {{ form_row(formAddAnnonce.Valider)}}
+
+    {{ form_end(formAddAnnonce)}}
 {% endblock %}

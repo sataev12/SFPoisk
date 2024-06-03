@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Annonce;
 use App\Entity\Commentaire;
 use App\Form\CommentaireType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -19,4 +21,25 @@ class CommentaireController extends AbstractController
         ]);
     }
 
+
+    // Creation d'une methode pour modifier les commentaires
+    #[Route('/commentaire/{id}/edit', name: 'edit_commentaire')]
+    public function edit(Commentaire $commentaire, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        
+        $commentaire->setDateCreation(new \DateTime()); // Régler automatiquement la date de création à aujourd'hui
+
+        $form = $this->createForm(CommentaireType::class, $commentaire);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('show_annonce', ['id' => $commentaire->getAnnonce()->getId()]);
+        }
+        return $this->render('commentaire/edit.html.twig', [
+            'formCommentaire' => $form->createView(),
+        ]);
+    }
 }
