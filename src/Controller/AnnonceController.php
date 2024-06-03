@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Annonce;
 use App\Entity\Commentaire;
+use App\Entity\Photo;
 use App\Form\AnnonceType;
 use App\Form\CommentaireType;
 use App\Repository\AnnonceRepository;
@@ -12,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpKernel\HttpCache\ResponseCacheStrategy;
 
 class AnnonceController extends AbstractController
@@ -47,6 +49,25 @@ class AnnonceController extends AbstractController
 
             // Gerer le téléchargement des images
             $imageFiles = $form->get('images')->getData();
+
+            foreach($imageFiles as $imageFile) {
+                $originalFileName = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFileName = uniqid() . '.' . $imageFile->guessExtension();
+
+                try {
+                    $imageFile->move(
+                        $this->getParameter('images_directory'),
+                        $newFileName
+                    );
+                } catch (FileException $e) {
+                    // Handle exception if something happens during file upload
+                }
+
+                $photo = new Photo();
+                $photo->setUrl('/img/' . $newFileName);
+                $photo->setAnnonce($annonce);
+                $entityManager->persist($photo);
+            }
 
 
             // execute PDO
