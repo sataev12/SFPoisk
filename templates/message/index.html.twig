@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{# {% extends 'base.html.twig' %}
 
 {% block title %}Hello MessageController!{% endblock %}
 
@@ -8,4 +8,23 @@
     {% for message in messages %}
         {{ message }}
     {% endfor %}
+{% endblock %} #}
+
+{# templates/message/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Messages</h1>
+
+    <a href="{{ path('new_message') }}" class="btn btn-primary">Nouveau message</a>
+
+    <ul>
+        {% for message in messages %}
+            <li>
+                <strong>{{ message.expediteur.nom }} à {{ message.destinataire.nom }} :</strong>
+                <p>{{ message.contenu }}</p>
+                <small>{{ message.dateEnvoi|date('d/m/Y H:i') }}</small>
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock %}
