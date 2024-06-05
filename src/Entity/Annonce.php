@@ -31,9 +31,9 @@ class Annonce
     #[ORM\Column]
     private ?int $prix = null;
 
-    #[ORM\ManyToOne(inversedBy: 'annonces')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Utilisateur $publier = null;
+    // #[ORM\ManyToOne(inversedBy: 'annonces')]
+    // #[ORM\JoinColumn(nullable: false)]
+    // private ?Utilisateur $publier = null;
 
     /**
      * @var Collection<int, Commentaire>
@@ -56,6 +56,10 @@ class Annonce
     #[ORM\ManyToOne(inversedBy: 'annonce')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Categorie $categorie = null;
+
+    #[ORM\ManyToOne(inversedBy: 'publier')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $publier = null;
 
     public function __construct()
     {
@@ -129,17 +133,17 @@ class Annonce
         return $this;
     }
 
-    public function getPublier(): ?Utilisateur
-    {
-        return $this->publier;
-    }
+    // public function getPublier(): ?Utilisateur
+    // {
+    //     return $this->publier;
+    // }
 
-    public function setPublier(?Utilisateur $publier): static
-    {
-        $this->publier = $publier;
+    // public function setPublier(?Utilisateur $publier): static
+    // {
+    //     $this->publier = $publier;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     /**
      * @return Collection<int, Commentaire>
@@ -246,5 +250,17 @@ class Annonce
     public function __toString()
     {
         return $this->titre;
+    }
+
+    public function getPublier(): ?User
+    {
+        return $this->publier;
+    }
+
+    public function setPublier(?User $publier): static
+    {
+        $this->publier = $publier;
+
+        return $this;
     }
 }

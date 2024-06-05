@@ -4,7 +4,7 @@ namespace App\Form;
 
 use App\Entity\Annonce;
 use App\Entity\Categorie;
-use App\Entity\Utilisateur;
+use App\Entity\User;
 use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -28,7 +28,7 @@ class AnnonceType extends AbstractType
             ->add('ville', TextType::class)
             ->add('prix', IntegerType::class)
             ->add('publier', EntityType::class, [
-                'class' => Utilisateur::class,
+                'class' => User::class,
                 'choice_label' => 'nom',
             ])
             ->add('categorie', EntityType::class, [

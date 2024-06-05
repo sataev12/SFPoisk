@@ -4,7 +4,7 @@ namespace App\Form;
 
 use App\Entity\Annonce;
 use App\Entity\Commentaire;
-use App\Entity\Utilisateur;
+use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -25,7 +25,7 @@ class CommentaireType extends AbstractType
             //     'choice_label' => 'id',
             // ])
             ->add('utilisateur', EntityType::class, [
-                'class' => Utilisateur::class,
+                'class' => User::class,
                 'choice_label' => 'nom',
             ])
         ;

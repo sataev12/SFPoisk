@@ -22,11 +22,11 @@ class Message
 
     #[ORM\ManyToOne(inversedBy: 'messages')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Utilisateur $expediteur = null;
+    private ?User $expediteur = null;
 
     #[ORM\ManyToOne(inversedBy: 'messageRecu')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Utilisateur $destinataire = null;
+    private ?User $destinataire = null;
 
     public function getId(): ?int
     {
@@ -57,24 +57,49 @@ class Message
         return $this;
     }
 
-    public function getExpediteur(): ?Utilisateur
+    // public function getExpediteur(): ?Utilisateur
+    // {
+    //     return $this->expediteur;
+    // }
+
+    // public function setExpediteur(?Utilisateur $expediteur): static
+    // {
+    //     $this->expediteur = $expediteur;
+
+    //     return $this;
+    // }
+
+    // public function getDestinataire(): ?Utilisateur
+    // {
+    //     return $this->destinataire;
+    // }
+
+    // public function setDestinataire(?Utilisateur $destinataire): static
+    // {
+    //     $this->destinataire = $destinataire;
+
+    //     return $this;
+    // }
+
+
+    public function getExpediteur(): ?User
     {
         return $this->expediteur;
     }
 
-    public function setExpediteur(?Utilisateur $expediteur): static
+    public function setExpediteur(?User $expediteur): static
     {
         $this->expediteur = $expediteur;
 
         return $this;
     }
 
-    public function getDestinataire(): ?Utilisateur
+    public function getDestinataire(): ?User
     {
         return $this->destinataire;
     }
 
-    public function setDestinataire(?Utilisateur $destinataire): static
+    public function setDestinataire(?User $destinataire): static
     {
         $this->destinataire = $destinataire;
 

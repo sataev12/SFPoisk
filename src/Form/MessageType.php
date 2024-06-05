@@ -3,7 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Message;
-use App\Entity\Utilisateur;
+use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,11 +19,11 @@ class MessageType extends AbstractType
             //     'widget' => 'single_text',
             // ])
             ->add('expediteur', EntityType::class, [
-                'class' => Utilisateur::class,
+                'class' => User::class,
                 'choice_label' => 'id',
             ])
             ->add('destinataire', EntityType::class, [
-                'class' => Utilisateur::class,
+                'class' => User::class,
                 'choice_label' => 'nom',
             ])
         ;

@@ -24,9 +24,13 @@ class Commentaire
     #[ORM\JoinColumn(nullable: false)]
     private ?Annonce $annonce = null;
 
-    #[ORM\ManyToOne(inversedBy: 'commentaires')]
+    #[ORM\ManyToOne(inversedBy: 'commentaire')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Utilisateur $utilisateur = null;
+    private ?User $utilisateur = null;
+
+    // #[ORM\ManyToOne(inversedBy: 'commentaires')]
+    // #[ORM\JoinColumn(nullable: false)]
+    // private ?Utilisateur $utilisateur = null;
 
     public function getId(): ?int
     {
@@ -69,12 +73,24 @@ class Commentaire
         return $this;
     }
 
-    public function getUtilisateur(): ?Utilisateur
+    // public function getUtilisateur(): ?Utilisateur
+    // {
+    //     return $this->utilisateur;
+    // }
+
+    // public function setUtilisateur(?Utilisateur $utilisateur): static
+    // {
+    //     $this->utilisateur = $utilisateur;
+
+    //     return $this;
+    // }
+
+    public function getUtilisateur(): ?User
     {
         return $this->utilisateur;
     }
 
-    public function setUtilisateur(?Utilisateur $utilisateur): static
+    public function setUtilisateur(?User $utilisateur): static
     {
         $this->utilisateur = $utilisateur;
 
