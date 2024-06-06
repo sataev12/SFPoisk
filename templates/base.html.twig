@@ -15,8 +15,16 @@
             <ul>
                 <li><h2>poisk</h2><img src="{{ asset('img/icon _globe_.png') }}" alt="Une image logo de site"></li>
                 <li><a href="{{ path('new_annonce') }}">Déposer une annonce</a></li>
-                <li><a href="{{ path('app_message') }}">Mes messages</a></li>
-                <li><a href="{{ path('app_annonce') }}">Mes annonces</a></li>
+                <li><a href="{{ path('app_message') }}"> Mes messages</a></li>
+                <li><a href="{{ path('app_annonce') }}"> Mes annonces</a></li>
+                {% if  app.user %}
+                    <li class="user"> {{ app.user.nom }}</li>
+                {% endif %}
+                {% if app.user %}
+                    <li><a href="{{ path('app_logout') }}"> Se déconnecter</a></li>
+                {% else %}
+                    <li><a href="{{ path('app_login') }}"> Se connecter</a></li> 
+                {% endif %}
             </ul>
         </nav>
         {% block body %}{% endblock %}
