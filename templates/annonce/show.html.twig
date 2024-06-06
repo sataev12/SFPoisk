@@ -11,6 +11,7 @@
         Prix : {{ annonce.prix }} <br>
         Description : {{ annonce.description }} <br>
         Date création : {{ annonce.dateCreation|date('d.m.Y H:i:s') }} <br>
+        Publié par : {{ annonce.publier.nom }}
         {% if annonce.photos|length > 0 %}
         <div>
             {% for photo in annonce.photos %}
@@ -18,8 +19,10 @@
             {% endfor %}
         </div>
     {% endif %}
-        <a href="{{ path('edit_annonce', {'id': annonce.id})}}">Modifier</a>
-        <a href="{{ path('delete_annonce', {'id': annonce.id}) }}">Supprimer</a>
+        {% if annonce.publier.nom == app.user or is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('edit_annonce', {'id': annonce.id})}}">Modifier</a>
+            <a href="{{ path('delete_annonce', {'id': annonce.id}) }}">Supprimer</a>
+        {% endif %}
         <h2>Commentaires :</h2>
             {% for commentaire in commentaires %}
                 <strong>{{ commentaire.utilisateur.nom }} :</strong> {{ commentaire.contenu }} <br>

@@ -36,6 +36,8 @@ class AnnonceController extends AbstractController
 
         if(!$annonce){
             $annonce = new Annonce();
+            $annonce->setPublier($this->getUser()); // Définir l'utilisateur courant comme auteur
+
         }
         
         $annonce->setDateCreation(new \DateTime()); // Régler automatiquement la date de création à aujourd'hui
