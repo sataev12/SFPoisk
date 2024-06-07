@@ -27,8 +27,10 @@
             {% for commentaire in commentaires %}
                 <strong>{{ commentaire.utilisateur.nom }} :</strong> {{ commentaire.contenu }} <br>
                 <small>{{ commentaire.dateCreation|date('d-m-Y H:i') }}</small> <br>
-                <a href="{{ path('edit_commentaire', {'id': commentaire.id}) }}">Edit</a>
-                <a href="{{ path('delete_commentaire', {'id': commentaire.id}) }}">supprimer</a> <br>
+                {% if annonce.publier.nom == app.user or is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('edit_commentaire', {'id': commentaire.id}) }}">Edit</a>
+                    <a href="{{ path('delete_commentaire', {'id': commentaire.id}) }}">supprimer</a> <br>
+                {% endif %}
                 
             {% else %}
                 Aucun commentaire pour cette annonce.    
