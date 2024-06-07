@@ -18,10 +18,10 @@ class MessageType extends AbstractType
             // ->add('dateEnvoi', null, [
             //     'widget' => 'single_text',
             // ])
-            ->add('expediteur', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'id',
-            ])
+            // ->add('expediteur', EntityType::class, [
+            //     'class' => User::class,
+            //     'choice_label' => 'id',
+            // ])
             ->add('destinataire', EntityType::class, [
                 'class' => User::class,
                 'choice_label' => 'nom',

@@ -28,12 +28,13 @@ class MessageController extends AbstractController
     {
 
         $message = new Message();
+        $message->setExpediteur($this->getUser());
         $form = $this->createForm(MessageType::class, $message);
 
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
             // Associer l'utilisateur connecté comme expéditeur
-            // $message->setExpediteur($this->getUser()); ça je vais refaire quand je vais finir authentification
+            //ça je vais refaire quand je vais finir authentification
             // Régler automatiquement la date d'envoi
             $message->setDateEnvoi(new \DateTime());
 
