@@ -24,10 +24,10 @@ class CommentaireType extends AbstractType
             //     'class' => Annonce::class,
             //     'choice_label' => 'id',
             // ])
-            ->add('utilisateur', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'nom',
-            ])
+            // ->add('utilisateur', EntityType::class, [
+            //     'class' => User::class,
+            //     'choice_label' => 'nom',
+            // ])
         ;
     }
 

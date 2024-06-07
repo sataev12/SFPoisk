@@ -27,7 +27,7 @@
             {% for commentaire in commentaires %}
                 <strong>{{ commentaire.utilisateur.nom }} :</strong> {{ commentaire.contenu }} <br>
                 <small>{{ commentaire.dateCreation|date('d-m-Y H:i') }}</small> <br>
-                {% if annonce.publier.nom == app.user or is_granted('ROLE_ADMIN') %}
+                {% if commentaire.utilisateur == app.user or is_granted('ROLE_ADMIN') %}
                     <a href="{{ path('edit_commentaire', {'id': commentaire.id}) }}">Edit</a>
                     <a href="{{ path('delete_commentaire', {'id': commentaire.id}) }}">supprimer</a> <br>
                 {% endif %}
@@ -35,7 +35,7 @@
             {% else %}
                 Aucun commentaire pour cette annonce.    
             {% endfor %}
-        <h2>Ajouter un commentaire :</h2>
+        <h2>Ajouter une commentaire :</h2>
         {{ form_start(formCommentaire) }}
             {{ form_row(formCommentaire.contenu) }}
             {# Les champs "annonce" et "utilisateur" ne sont pas nécessaires dans le formulaire car ils sont définis en backend #}
