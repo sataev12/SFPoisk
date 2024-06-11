@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Message;
+use App\Entity\User;
 use App\Form\MessageType;
 use App\Repository\MessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,8 +24,8 @@ class MessageController extends AbstractController
     }
 
     // Mise à jour du contrôleur pour ajouter une action new pour l'envoi de message
-    #[Route('/message/new', name: 'new_message')]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/message/new/{destinateure}', name: 'new_message')]
+    public function new(Request $request, EntityManagerInterface $entityManager, User $destinataire): Response
     {
 
         $message = new Message();
