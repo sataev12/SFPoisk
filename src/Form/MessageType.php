@@ -25,6 +25,7 @@ class MessageType extends AbstractType
             ->add('destinataire', EntityType::class, [
                 'class' => User::class,
                 'choice_label' => 'nom',
+                'disabled' => true, // Rendre le champ non modifiable
             ])
         ;
     }

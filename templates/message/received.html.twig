@@ -12,8 +12,9 @@
                 {% endif %}
                 <p>{{ message.contenu }}</p>
                 <small>{{ message.dateEnvoi|date('d/m/Y H:i') }}</small>
-                <a href="{{ path('read_message', {id: message.id}) }}" class="btn btn-sm btn-success">Marquer comme lu</a>
+                <a href="{{ path('read_messages', {id: message.id}) }}" class="btn btn-sm btn-success">Marquer comme lu</a>
             </li>
         {% endfor %}
     </ul>
+    <li><a href="{{ path('app_message_sent') }}">Messages envoyés</a></li>
 {% endblock %}

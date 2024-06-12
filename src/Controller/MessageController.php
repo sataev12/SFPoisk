@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Message;
+use App\Entity\User;
 use App\Form\MessageType;
 use App\Repository\MessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,18 +17,21 @@ class MessageController extends AbstractController
     #[Route('/message', name: 'app_message')]
     public function index(MessageRepository $messageRepository): Response
     {
-        $messages = $messageRepository->findBy([], ["dateEnvoi" => "DESC"]);
+        $user = $this->getUser();
+
+        $messages = $messageRepository->findBy(['destinataire' => $user], ["dateEnvoi" => "DESC"]);
         return $this->render('message/index.html.twig', [
             'messages' => $messages
         ]);
     }
 
     // Mise à jour du contrôleur pour ajouter une action new pour l'envoi de message
-    #[Route('/message/new', name: 'new_message')]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/message/{id}/new', name: 'new_message')]
+    public function new(Request $request, EntityManagerInterface $entityManager, User $user): Response
     {
 
         $message = new Message();
+        $message->setDestinataire($user);
         $form = $this->createForm(MessageType::class, $message);
 
         $form->handleRequest($request);
@@ -58,6 +62,21 @@ class MessageController extends AbstractController
             'messages' => $messages,
         ]);
     }
+
+     #[Route('/messages/sent', name: 'app_message_sent')]
+    public function envoyee(MessageRepository $messageRepository): Response
+    {
+        //Recuperer l'utilisateur connecté
+        $user = $this->getUser();
+
+        // Récupérer les messages envoyés par l'utilisateur connecté
+        $messageEnvoye = $messageRepository->findBy(['expediteur' => $user]);
+
+        return $this->render('message/sent.html.twig', [
+            'messageEnvoye' => $messageEnvoye,
+        ]);
+    }
+    
 
     #[Route('/messages/lire/{id}', name: 'read_messages')]
     public function readMessage(Message $message, EntityManagerInterface $entityManager): Response

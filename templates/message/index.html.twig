@@ -16,7 +16,7 @@
 {% block body %}
     <h1>Messages</h1>
 
-    <a href="{{ path('new_message') }}" class="btn btn-primary">Nouveau message</a>
+    {# <a href="{{ path('new_message') }}" class="btn btn-primary">Nouveau message</a>
 
     <ul>
         {% for message in messages %}
@@ -26,5 +26,19 @@
                 <small>{{ message.dateEnvoi|date('d/m/Y H:i') }}</small>
             </li>
         {% endfor %}
+    </ul> #}
+    <ul>
+        {% for message in messages %}
+            <li>
+                <strong>{{ message.expediteur.nom }}</strong>
+                {% if not message.lu %}
+                    <span class="badge bg-warning">Nouveau</span>
+                {% endif %}
+                <p>{{ message.contenu }}</p>
+                <small>{{ message.dateEnvoi|date('d/m/Y H:i') }}</small>
+                <a href="{{ path('read_messages', {id: message.id}) }}" class="btn btn-sm btn-success">Marquer comme lu</a>
+            </li>
+        {% endfor %}
+        
     </ul>
 {% endblock %}
