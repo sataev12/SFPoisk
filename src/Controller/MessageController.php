@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Message;
-use App\Entity\User;
 use App\Form\MessageType;
 use App\Repository\MessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,18 +23,17 @@ class MessageController extends AbstractController
     }
 
     // Mise à jour du contrôleur pour ajouter une action new pour l'envoi de message
-    #[Route('/message/new/{destinateure}', name: 'new_message')]
-    public function new(Request $request, EntityManagerInterface $entityManager, User $destinataire): Response
+    #[Route('/message/new', name: 'new_message')]
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
 
         $message = new Message();
-        $message->setExpediteur($this->getUser());
         $form = $this->createForm(MessageType::class, $message);
 
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
             // Associer l'utilisateur connecté comme expéditeur
-            //ça je vais refaire quand je vais finir authentification
+            $message->setExpediteur($this->getUser()); // ça je vais refaire quand je vais finir authentification
             // Régler automatiquement la date d'envoi
             $message->setDateEnvoi(new \DateTime());
 
@@ -48,5 +46,25 @@ class MessageController extends AbstractController
         return $this->render('message/new.html.twig', [
             'formMessage' => $form->createView(),
         ]);
+    }
+
+    #[Route('/messages/recus', name: 'received_messages')]
+    public function receivedMessages(MessageRepository $messageRepository): Response
+    {
+        $user = $this->getUser();
+        $messages = $messageRepository->findBy(['destinataire' => $user], ['dateEnvoi' => 'DESC']);
+
+        return $this->render('message/received.html.twig', [
+            'messages' => $messages,
+        ]);
+    }
+
+    #[Route('/messages/lire/{id}', name: 'read_messages')]
+    public function readMessage(Message $message, EntityManagerInterface $entityManager): Response
+    {
+        $message->setLu(true);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('received_messages');
     }
 }

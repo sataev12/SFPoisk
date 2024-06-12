@@ -28,6 +28,9 @@ class Message
     #[ORM\JoinColumn(nullable: false)]
     private ?User $destinataire = null;
 
+    #[ORM\Column]
+    private ?bool $lu = false;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -109,5 +112,17 @@ class Message
     public function __toString()
     {
         return $this->contenu.' (Envoyé par :'.$this->getExpediteur()->getNom().')' ;
+    }
+
+    public function isLu(): ?bool
+    {
+        return $this->lu;
+    }
+
+    public function setLu(bool $lu): static
+    {
+        $this->lu = $lu;
+
+        return $this;
     }
 }
