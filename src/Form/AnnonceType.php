@@ -30,6 +30,7 @@ class AnnonceType extends AbstractType
             ->add('publier', EntityType::class, [
                 'class' => User::class,
                 'choice_label' => 'nom',
+                'disabled' => true,
             ])
             ->add('categorie', EntityType::class, [
                 'class' => Categorie::class,
@@ -52,3 +53,4 @@ class AnnonceType extends AbstractType
         ]);
     }
 }
+

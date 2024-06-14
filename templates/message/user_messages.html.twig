@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h2>Messages envoyés par {{ user.nom }}</h2>
+
+    {% for message in messages %}
+        <div>{{ message.dateEnvoi|date('d/m/Y H:i') }} - {{ message.contenu}}</div>
+    {% endfor%}    
+
+    
+    
+{% endblock %}

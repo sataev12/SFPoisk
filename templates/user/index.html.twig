@@ -8,4 +8,46 @@
     <p><strong>Nom : </strong>{{ user.nom }}</p>
     <p><strong>Email : </strong>{{ user.email }}</p>
     <a href="{{ path('new_message', {'id': user.id }) }}">Message</a>
+    <p>Moyenne des évaluations : {{ averageRating }}</p>
+    <h1>Notez cet utilisateur</h1>
+    <form action="{{ path('app_rating', {'id': user.id }) }}" method="post">
+        {{ form_start(form) }}
+        <input type="hidden" id="rating-value" name="rating[value]" value="0">
+            <div class="stars" data-rating="0">
+                {% for i in 1..5 %}
+                    <span class="star" data-value="{{ i }}">&#9733;</span>
+                {% endfor %}
+            </div>
+        {{ form_end(form) }}
+    </form>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const stars = document.querySelectorAll('.star');
+            const ratingValue = document.getElementById('rating-value');
+            stars.forEach(star => {
+                star.addEventListener('click', function () {
+                    const rating = this.getAttribute('data-value');
+                    ratingValue.value = rating; // Mettre à jour la valeur du champ de formulaire caché
+                    updateStars(rating);
+                });
+            });
+        
+            function updateStars(rating) {
+                stars.forEach(star => {
+                    star.style.color = star.dataset.value <= rating ? 'gold' : 'gray';
+                });
+                document.forms[0].submit();
+            }
+        });
+    </script>
+    <style>
+        .star {
+            color: gray;
+            font-size: 30px;
+            cursor: pointer;
+        }
+    </style>
 {% endblock %}
+
+
+

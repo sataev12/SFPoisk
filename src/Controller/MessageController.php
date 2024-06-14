@@ -44,7 +44,7 @@ class MessageController extends AbstractController
             $entityManager->persist($message);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_message');
+            return $this->redirectToRoute('received_messages');
         }
 
         return $this->render('message/new.html.twig', [
@@ -76,6 +76,18 @@ class MessageController extends AbstractController
             'messageEnvoye' => $messageEnvoye,
         ]);
     }
+
+    #[Route('/messages/user/{id}', name: 'messages_user')]
+    public function messagesByUser(MessageRepository $messageRepository): Response
+    {
+        $user = $this->getUser();
+        $messages = $messageRepository->findBy(['expediteur' => $user], ['dateEnvoi' => 'DESC']);
+
+        return $this->render('message/user_messages.html.twig', [
+            'messages' => $messages,
+            'user' => $user
+            ]);
+        }
     
 
     #[Route('/messages/lire/{id}', name: 'read_messages')]

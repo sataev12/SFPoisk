@@ -9,7 +9,7 @@
         {% for message in messageEnvoye %}
             {% if message.destinataire.nom not in displayed_destinataires %}
                 <li>
-                    <a href="{{ path('app_message_sent', {'id': message.destinataire.id})}}"><strong>{{ message.destinataire.nom }}</strong></a>
+                    <a href="{{ path('messages_user', {'id': message.destinataire.id})}}"><strong>{{ message.destinataire.nom }}</strong></a>
                     {# <p>{{ message.contenu }}</p>
                     <small>{{ message.dateEnvoi|date('d/m/Y H:i') }}</small> #}
                 </li>

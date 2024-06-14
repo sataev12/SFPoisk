@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -71,6 +72,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Message::class, mappedBy: 'destinataire')]
     private Collection $messageRecu;
 
+    /**
+     * @var Collection<int, Rating>
+     */
+    #[ORM\OneToMany(targetEntity: Rating::class, mappedBy: 'user')]
+    private Collection $ratings;
+
+    // #[ORM\Column(type: Types::DECIMAL, precision: 3, scale: 1, nullable: true)]
+    // private ?string $rating = null;
+
     public function __construct()
     {
         $this->publier = new ArrayCollection();
@@ -78,6 +88,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->signalement = new ArrayCollection();
         $this->messages = new ArrayCollection();
         $this->messageRecu = new ArrayCollection();
+        $this->ratings = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -323,6 +334,38 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($messageRecu->getDestinataire() === $this) {
                 $messageRecu->setDestinataire(null);
+            }
+        }
+
+        return $this;
+    }
+
+   
+
+    /**
+     * @return Collection<int, Rating>
+     */
+    public function getRatings(): Collection
+    {
+        return $this->ratings;
+    }
+
+    public function addRating(Rating $rating): static
+    {
+        if (!$this->ratings->contains($rating)) {
+            $this->ratings->add($rating);
+            $rating->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRating(Rating $rating): static
+    {
+        if ($this->ratings->removeElement($rating)) {
+            // set the owning side to null (unless already changed)
+            if ($rating->getUser() === $this) {
+                $rating->setUser(null);
             }
         }
 

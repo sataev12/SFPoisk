@@ -18,7 +18,9 @@
                 <li><a href="{{ path('received_messages') }}">Messages</a></li>
                 <li><a href="{{ path('app_annonce') }}"> Mes annonces</a></li>
                 {% if  app.user %}
-                    <li class="user"> {{ app.user.nom }}</li>
+                    <a href="{{ path('app_user', {'id': app.user.id}) }}">
+                        <li class="user">{{ app.user.nom }}</li>
+                    </a>
                 {% endif %}
                 {% if app.user %}
                     <li><a href="{{ path('app_logout') }}"> Se déconnecter</a></li>
