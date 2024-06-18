@@ -26,17 +26,6 @@ class UserController extends AbstractController
         ]);
     }
 
-    // Utiliser ici la methode getAverageRating du repository UserRepository pour calculer la moyenne des ratings
-    // #[Route('/user/rate/{id}', name: 'user_show')]
-    // public function rate(User $user, UserRepository $userRepository): Response
-    // {
-    //     $averageRating = $userRepository->getAverageRating($user);
-    //     return $this->render('user/index.html.twig', [
-    //         'user' => $user,
-    //         'averageRating' => $averageRating
-    //     ]);
-    // }
-
     #[Route('/user/rate/{id}', name: 'user_rate')]
     public function rate(User $user, Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -58,9 +47,5 @@ class UserController extends AbstractController
         ]);
     }
 
-    // $annonces = $annonceRepository->findBy([], ["dateCreation" => "DESC"]);
-    //     return $this->render('annonce/index.html.twig', [
-    //         'annonces' => $annonces
-    //     ]);
     
 }
