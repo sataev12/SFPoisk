@@ -7,6 +7,7 @@ use App\Entity\Commentaire;
 use App\Entity\Photo;
 use App\Form\AnnonceType;
 use App\Form\CommentaireType;
+use App\Form\RechercheType;
 use App\Repository\AnnonceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -120,6 +121,13 @@ class AnnonceController extends AbstractController
             'commentaires' => $commentaires,
             'formCommentaire' => $form->createView(),
         ]);
+    }
+
+    #[Route('/annonce', name: 'recherche_annonce')]
+    public function recherche(): Response
+    {
+        $annonce = new Annonce();
+        $form = $this->createForm(RechercheType::class, )
     }
 
 }
