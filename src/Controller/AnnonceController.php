@@ -127,7 +127,8 @@ class AnnonceController extends AbstractController
     public function recherche(): Response
     {
         $annonce = new Annonce();
-        $form = $this->createForm(RechercheType::class, )
+        $form = $this->createForm(RechercheType::class, ) 
+        
     }
 
 }
