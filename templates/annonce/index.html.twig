@@ -23,6 +23,11 @@
                 <p>{{ annonce.description }}</p>
                 <p><strong>Ville :</strong> {{ annonce.ville }}</p>
                 <p><strong>Prix :</strong> {{ annonce.prix }} €</p>
+                {% if app.user and annonce.id in favoris %}
+                    <p><a href="{{ path('remove_favori', {'id': annonce.id}) }}" class="btn btn-danger">Retirer des favoris</a></p>
+                {% else %}
+                    <p><a href="{{ path('add_favori', {'id': annonce.id}) }}" class="btn btn-success">Ajouter aux favoris</a></p>
+                {% endif %}
             </div>
         {% else %}
             <p>Aucune annonce trouvée</p>

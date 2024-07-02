@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Favoris{% endblock %}
+
+{% block body %}
+    <h1>Mes Favoris</h1>
+
+    <div class="annonces">
+        {% for annonce in annonces %}
+            <div class="annonce">
+                <h2>{{ annonce.titre }}</h2>
+                <p>{{ annonce.description }}</p>
+                <p><strong>Ville :</strong> {{ annonce.ville }}</p>
+                <p><strong>Prix :</strong> {{ annonce.prix }} €</p>
+                <p><a href="{{ path('show_annonce', {'id': annonce.id}) }}">Voir l'annonce</a></p>
+                
+            </div>
+        {% else %}
+            <p>Aucune annonce en favoris</p>
+        {% endfor %}
+    </div>
+{% endblock %}

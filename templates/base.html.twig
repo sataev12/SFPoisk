@@ -17,6 +17,7 @@
                 <li><a href="{{ path('new_annonce') }}">Déposer une annonce</a></li>
                 <li><a href="{{ path('received_messages') }}">Messages</a></li>
                 <li><a href="{{ path('app_annonce') }}"> Mes annonces</a></li>
+                <li><a href="{{ path('view_favoris')}}"> Mes favoris</a></li>
                 {% if  app.user %}
                     <a href="{{ path('app_user', {'id': app.user.id}) }}">
                         <li class="user">{{ app.user.nom }}</li>

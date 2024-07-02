@@ -15,12 +15,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\HttpCache\ResponseCacheStrategy;
 
 class AnnonceController extends AbstractController
 {
     #[Route('/annonce', name: 'app_annonce')]
-    public function index(Request $request, AnnonceRepository $annonceRepository): Response
+    public function index(Request $request, AnnonceRepository $annonceRepository, SessionInterface $session): Response
     {
         // $annonces = $entityManager->getRepository(Annonce::class)->findAll();
         // $annonces = $annonceRepository->findAll();
@@ -36,6 +37,7 @@ class AnnonceController extends AbstractController
         return $this->render('annonce/index.html.twig', [
             'annonces' => $annonces,
             'RechercheForm' => $form->createView(),
+            'favoris' => $session->get('favoris', []),
         ]);
     }
 
@@ -132,5 +134,48 @@ class AnnonceController extends AbstractController
         ]);
     }
 
+
+    #[Route('/annonce/{id}/favori', name: 'add_favori')]
+    public function addFavori(Annonce $annonce, SessionInterface $session): Response
+    {
+        $favoris = $session->get('favoris', []);
+
+        // Ajoutez l'annonce aux favoris si elle n'y est pas déjà
+        if(!in_array($annonce->getId(), $favoris)) {
+            $favoris[] = $annonce->getId();
+        }
+
+        $session->set('favoris', $favoris);
+
+        return $this->redirectToRoute('show_annonce', ['id' => $annonce->getId()]);
+    }
+
+    // Ajoutez cette méthode pour afficher les favoris
+    #[Route('/favoris', name: 'view_favoris')]
+    public function viewFavoris(SessionInterface $session, AnnonceRepository $annonceRepository): Response
+    {
+        $favoris = $session->get('favoris', []);
+        $annonces = $annonceRepository->findBy(['id' => $favoris]);
+
+        return $this->render('annonce/favoris.html.twig', [
+            'annonces' => $annonces,
+        ]);
+    }
+
+    // Suppression de favoris
+    #[Route('/annonce/{id}/favori/remove', name: 'remove_favori')]
+    public function removeFavori(Annonce $annonce, SessionInterface $session): Response
+    {
+        $favoris = $session->get('favoris', []);
+
+        // Supprimer l'annonce des favoris si elle y est
+        if(in_array($annonce->getId(), $favoris)) {
+            $favoris = array_diff($favoris, [$annonce->getId()]);
+        }
+
+        $session->set('favoris', $favoris);
+
+        return $this->redirectToRoute('view_favoris');
+    }
     
 }
