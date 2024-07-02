@@ -40,4 +40,40 @@ class AnnonceRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function rechercheAnnonce(?string $keyword, ?string $ville, ?int $minPrix, ?int $maxPrix)
+    {
+        $qb = $this->createQueryBuilder('a');
+
+        if ($keyword) {
+            $qb->andWhere('a.titre LIKE :keyword OR a.description LIKE :keyword OR a.ville LIKE :keyword')
+            ->setParameter('keyword', '%' . $keyword . '%');
+        }
+
+        if ($ville) {
+            $qb->andWhere('a.ville LIKE :ville')
+                ->setParameter('ville', '%' . $ville . '%');
+        }
+
+        if ($minPrix !== null) {
+            $qb->andWhere('a.prix >= :minPrix')
+                ->setParameter('minPrix', $minPrix);
+        }
+
+        if ($maxPrix !== null) {
+            $qb->andWhere('a.prix <= :maxPrix')
+                ->setParameter('maxPrix', $maxPrix);
+        }
+
+        return $qb->orderBy('a.dateCreation', 'DESC')
+            ->getQuery()
+            ->getResult();
+
+        // return $this->createQueryBuilder('a')
+        //     ->andWhere('a.titre LIKE :keyword OR a.description LIKE :keyword OR a.ville LIKE :keyword')
+        //     ->setParameter('keyword', '%' . $keyword . '%')
+        //     ->orderBy('a.dateCreation' , 'DESC')
+        //     ->getQuery()
+        //     ->getResult();
+    }
 }

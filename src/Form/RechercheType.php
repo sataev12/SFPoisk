@@ -2,48 +2,56 @@
 
 namespace App\Form;
 
+use App\Entity\User;
 use App\Entity\Annonce;
 use App\Entity\Categorie;
-use App\Entity\User;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\SearchType as SymfonySearchType;
 
 class RechercheType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('q', TextType::class, [
+            ->add('keyword', SymfonySearchType::class, [
+                'label' => false,
                 'attr' => [
-                    'placeholder' => 'Recherche via un mot clé...'
-                ]
+                    'placeholder' => 'Recherche...',
+                ],
+                'required' => false, 
             ])
-            // ->add('titre')
-            // ->add('description')
-            // ->add('dateCreation', null, [
-            //     'widget' => 'single_text',
-            // ])
-            // ->add('ville')
-            // ->add('prix')
-            // ->add('categorie', EntityType::class, [
-            //     'class' => Categorie::class,
-            //     'choice_label' => 'id',
-            // ])
-            // ->add('publier', EntityType::class, [
-            //     'class' => User::class,
-            //     'choice_label' => 'id',
-            // ])
+            ->add('ville', SymfonySearchType::class, [
+                'label' => false,
+                'attr' => [
+                    'placeholder' => 'Ville...',
+                ],
+                'required' => false,
+            ])
+            ->add('minPrix', NumberType::class, [
+                'label' => false,
+                'attr' => [
+                    'placeholder' => 'Prix minimum',
+                ],
+                'required' => false,
+            ])
+            ->add('maxPrix', NumberType::class, [
+                'label' => false,
+                'attr' => [
+                    'placeholder' => 'Prix maximum',
+                ],
+                'required' => false,
+            ])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'method' => 'GET',
-            'data_class' => Annonce::class,
+    
         ]);
     }
 }

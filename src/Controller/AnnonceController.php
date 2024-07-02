@@ -20,13 +20,22 @@ use Symfony\Component\HttpKernel\HttpCache\ResponseCacheStrategy;
 class AnnonceController extends AbstractController
 {
     #[Route('/annonce', name: 'app_annonce')]
-    public function index(AnnonceRepository $annonceRepository): Response
+    public function index(Request $request, AnnonceRepository $annonceRepository): Response
     {
         // $annonces = $entityManager->getRepository(Annonce::class)->findAll();
         // $annonces = $annonceRepository->findAll();
-        $annonces = $annonceRepository->findBy([], ["dateCreation" => "DESC"]);
+
+        $form = $this->createForm(RechercheType::class);
+        $form->handleRequest($request);
+
+        $keyword = $form->get('keyword')->getData();
+        $ville = $form->get('ville')->getData();
+        $minPrix = $form->get('minPrix')->getData();
+        $maxPrix = $form->get('maxPrix')->getData();
+        $annonces = $keyword ? $annonceRepository->rechercheAnnonce($keyword, $ville, $minPrix, $maxPrix) : $annonceRepository->findBy([], ['dateCreation' => 'DESC']);
         return $this->render('annonce/index.html.twig', [
-            'annonces' => $annonces
+            'annonces' => $annonces,
+            'RechercheForm' => $form->createView(),
         ]);
     }
 
@@ -123,12 +132,5 @@ class AnnonceController extends AbstractController
         ]);
     }
 
-    #[Route('/annonce', name: 'recherche_annonce')]
-    public function recherche(): Response
-    {
-        $annonce = new Annonce();
-        $form = $this->createForm(RechercheType::class, ) 
-        
-    }
-
+    
 }

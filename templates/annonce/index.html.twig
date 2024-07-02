@@ -5,7 +5,27 @@
 {% block body %}
     <h1>Liste des annonces</h1>
 
-    {% for annonce in annonces %}
+    {# {% for annonce in annonces %}
         <a href="{{ path('show_annonce', {'id': annonce.id})}}">{{ annonce }}</a> <br>
-    {% endfor %}   
+    {% endfor %}   #}
+    {{ form_start(RechercheForm, {'attr': {'class': 'form-inline'}}) }}
+    {{ form_widget(RechercheForm.keyword, {'attr': {'class': 'form-control mr-sm-2', 'placeholder': 'Rechercher une annonce...'}}) }}
+    {{ form_widget(RechercheForm.ville, {'attr': {'class': 'form-control mr-sm-2', 'placeholder': 'Ville...'}}) }}
+    {{ form_widget(RechercheForm.minPrix, {'attr': {'class': 'form-control mr-sm-2', 'placeholder': 'Prix min'}}) }}
+    {{ form_widget(RechercheForm.maxPrix, {'attr': {'class': 'form-control mr-sm-2', 'placeholder': 'Prix max'}}) }}
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Rechercher</button>
+    {{ form_end(RechercheForm) }}
+
+    <div class="annonces">
+        {% for annonce in annonces %}
+            <div class="annonce">
+                <h2><a href="{{ path('show_annonce', {'id': annonce.id}) }}">{{ annonce.titre }}</a></h2>
+                <p>{{ annonce.description }}</p>
+                <p><strong>Ville :</strong> {{ annonce.ville }}</p>
+                <p><strong>Prix :</strong> {{ annonce.prix }} €</p>
+            </div>
+        {% else %}
+            <p>Aucune annonce trouvée</p>
+        {% endfor %}
+    </div>
 {% endblock %}
