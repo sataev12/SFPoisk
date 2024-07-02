@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des catégories{% endblock %}
+
+{% block body %}
+    <h1>Liste des catégories</h1>
+    <ul>
+        {% for categorie in categories %}
+            <li>
+                {{ categorie.nom }}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('admin_categorie_edit', {'id': categorie.id}) }}" class="btn btn-warning">Modifier</a>
+                    <form action="{{ path('admin_categorie_delete', {'id': categorie.id}) }}" method="post" style="display:inline;">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ categorie.id) }}">
+                        <button class="btn btn-danger">Supprimer</button>
+                    </form>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('admin_categorie_new') }}" class="btn btn-primary">Créer une nouvelle catégorie</a>
+    {% else %}
+        <p>Vous n'avez pas les droits pour accéder à cette page.</p>
+    {% endif %}
+{% endblock %}
