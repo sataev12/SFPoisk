@@ -5,6 +5,10 @@
 {% block body %}
     <h1>Liste des annonces</h1>
 
+    {% for categorie in categories %}
+        {{ categorie.nom }}
+    {% endfor %}
+
     {# {% for annonce in annonces %}
         <a href="{{ path('show_annonce', {'id': annonce.id})}}">{{ annonce }}</a> <br>
     {% endfor %}   #}

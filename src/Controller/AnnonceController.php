@@ -3,12 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Annonce;
+use App\Entity\Categorie;
 use App\Entity\Commentaire;
 use App\Entity\Photo;
 use App\Form\AnnonceType;
 use App\Form\CommentaireType;
 use App\Form\RechercheType;
 use App\Repository\AnnonceRepository;
+use App\Repository\CategorieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,10 +23,11 @@ use Symfony\Component\HttpKernel\HttpCache\ResponseCacheStrategy;
 class AnnonceController extends AbstractController
 {
     #[Route('/annonce', name: 'app_annonce')]
-    public function index(Request $request, AnnonceRepository $annonceRepository, SessionInterface $session): Response
+    public function index(Request $request, AnnonceRepository $annonceRepository, CategorieRepository $categorieRepository , SessionInterface $session): Response
     {
         // $annonces = $entityManager->getRepository(Annonce::class)->findAll();
         // $annonces = $annonceRepository->findAll();
+        
 
         $form = $this->createForm(RechercheType::class);
         $form->handleRequest($request);
@@ -34,10 +37,13 @@ class AnnonceController extends AbstractController
         $minPrix = $form->get('minPrix')->getData();
         $maxPrix = $form->get('maxPrix')->getData();
         $annonces = $keyword ? $annonceRepository->rechercheAnnonce($keyword, $ville, $minPrix, $maxPrix) : $annonceRepository->findBy([], ['dateCreation' => 'DESC']);
+
+        $categories = $categorieRepository->findAll();
         return $this->render('annonce/index.html.twig', [
             'annonces' => $annonces,
             'RechercheForm' => $form->createView(),
             'favoris' => $session->get('favoris', []),
+            'categories' => $categories,
         ]);
     }
 
