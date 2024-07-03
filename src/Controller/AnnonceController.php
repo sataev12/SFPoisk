@@ -6,6 +6,7 @@ use App\Entity\Annonce;
 use App\Entity\Categorie;
 use App\Entity\Commentaire;
 use App\Entity\Photo;
+use App\Entity\Signalement;
 use App\Form\AnnonceType;
 use App\Form\CommentaireType;
 use App\Form\RechercheType;
@@ -37,7 +38,7 @@ class AnnonceController extends AbstractController
         $minPrix = $form->get('minPrix')->getData();
         $maxPrix = $form->get('maxPrix')->getData();
         $annonces = $keyword ? $annonceRepository->rechercheAnnonce($keyword, $ville, $minPrix, $maxPrix) : $annonceRepository->findBy([], ['dateCreation' => 'DESC']);
-
+        
         $categories = $categorieRepository->findAll();
         return $this->render('annonce/index.html.twig', [
             'annonces' => $annonces,
@@ -183,5 +184,28 @@ class AnnonceController extends AbstractController
 
         return $this->redirectToRoute('view_favoris');
     }
-    
+
+    #[Route('/annonce/{id}/signaler', name: 'signaler_annonce')]
+    public function signalerAnnonce(Annonce $annonce, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $signalement = new Signalement();
+        $signalement->setAnnonce($annonce);
+        $signalement->setUser($this->getUser());
+        $signalement->setDateSignalement(new \DateTime());
+        
+        $form = $this->createForm(SignalementType::class, $signalement);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($signalement);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Votre signalement a été enregistré.');
+            return $this->redirectToRoute('show_annonce', ['id' => $annonce->getId()]);
+        }
+        return $this->render('annonce/signaler.html.twig', [
+            'annonce' => $annonce,
+            'form' => $form->createView(),
+        ]);
+    }
+
 }

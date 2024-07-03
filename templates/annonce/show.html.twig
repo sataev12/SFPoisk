@@ -23,6 +23,7 @@
             <a href="{{ path('edit_annonce', {'id': annonce.id})}}">Modifier</a>
             <a href="{{ path('delete_annonce', {'id': annonce.id}) }}">Supprimer</a>
         {% endif %}
+        <a href="{{ path('signaler_annonce', {'id': annonce.id}) }}">Signaler</a>
         <h2>Commentaires :</h2>
             {% for commentaire in commentaires %}
                 <strong>{{ commentaire.utilisateur.nom }} :</strong> {{ commentaire.contenu }} <br>
