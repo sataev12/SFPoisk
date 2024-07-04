@@ -1,0 +1,14 @@
+{# templates/annonce/signaler.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Signaler l'annonce {{ annonce }}</h1>
+
+    {{ form_start(formSignalement) }}
+        {{ form_widget(formSignalement.type) }}
+        {{ form_widget(formSignalement.contenu) }}
+        <button type="submit">Signaler</button>
+    {{ form_end(formSignalement) }}
+
+    <a href="{{ path('show_annonce', {'id': annonce.id}) }}">Retour à l'annonce</a>
+{% endblock %}

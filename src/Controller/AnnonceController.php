@@ -2,24 +2,26 @@
 
 namespace App\Controller;
 
+
+use App\Entity\Photo;
 use App\Entity\Annonce;
 use App\Entity\Categorie;
-use App\Entity\Commentaire;
-use App\Entity\Photo;
-use App\Entity\Signalement;
 use App\Form\AnnonceType;
-use App\Form\CommentaireType;
+use App\Entity\Commentaire;
+use App\Entity\Signalement;
 use App\Form\RechercheType;
+use App\Form\CommentaireType;
+use App\Form\SignalementType;
 use App\Repository\AnnonceRepository;
 use App\Repository\CategorieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\HttpCache\ResponseCacheStrategy;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class AnnonceController extends AbstractController
 {
@@ -139,6 +141,7 @@ class AnnonceController extends AbstractController
             'commentaires' => $commentaires,
             'formCommentaire' => $form->createView(),
         ]);
+
     }
 
 
@@ -185,27 +188,34 @@ class AnnonceController extends AbstractController
         return $this->redirectToRoute('view_favoris');
     }
 
+    
+    // Creer une methode pour signaler l'annonce
     #[Route('/annonce/{id}/signaler', name: 'signaler_annonce')]
-    public function signalerAnnonce(Annonce $annonce, Request $request, EntityManagerInterface $entityManager): Response
+    public function signaleAnnonce(Annonce $annonce,Request $request, EntityManagerInterface $entityManager): Response
     {
+
         $signalement = new Signalement();
         $signalement->setAnnonce($annonce);
         $signalement->setUser($this->getUser());
         $signalement->setDateSignalement(new \DateTime());
         
-        $form = $this->createForm(SignalementType::class, $signalement);
-        $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()) {
+
+        $formSignalement = $this->createForm(SignalementType::class, $signalement);
+        $formSignalement->handleRequest($request);
+
+        if($formSignalement->isSubmitted() && $formSignalement->isValid()) {
             $entityManager->persist($signalement);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Votre signalement a été enregistré.');
+            $this->addFlash('success', 'L\'annonce a été signalé avec succès.');
             return $this->redirectToRoute('show_annonce', ['id' => $annonce->getId()]);
         }
+
         return $this->render('annonce/signaler.html.twig', [
             'annonce' => $annonce,
-            'form' => $form->createView(),
+            'formSignalement' => $formSignalement->createView(),
         ]);
     }
+
 
 }
