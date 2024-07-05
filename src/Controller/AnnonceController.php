@@ -14,6 +14,7 @@ use App\Form\CommentaireType;
 use App\Form\SignalementType;
 use App\Repository\AnnonceRepository;
 use App\Repository\CategorieRepository;
+use App\Repository\SignalementRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -217,5 +218,15 @@ class AnnonceController extends AbstractController
         ]);
     }
 
+    // Afficher la liste des signalements
+    #[Route('/signalements', name: 'liste_signalements')]
+    public function listeSignalements(SignalementRepository $signalementRepository): Response
+    {
+        $signalements = $signalementRepository->findAll();
+
+        return $this->render('annonce/liste_signalements.html.twig', [
+            'signalements' => $signalements,
+        ]);
+    }
 
 }

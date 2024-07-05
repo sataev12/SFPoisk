@@ -8,6 +8,7 @@ use App\Form\RatingType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -47,5 +48,32 @@ class UserController extends AbstractController
         ]);
     }
 
-    
+    // Les methodes pour bloquer/debloquer les utilisateurs
+    #[Route('/user/block/{id}', name: 'user_block')]
+    public function blockUser(User $user, UserRepository $userRepository): RedirectResponse
+    {
+        $userRepository->blockUser($user);
+        $this->addFlash('success', 'Utilisateur bloqué avec succès.');
+
+        return $this->redirectToRoute('user_list');
+    }
+
+    #[Route('/user/unblock/{id}', name: 'user_unblock')]
+    public function unblockUser(User $user, UserRepository $userRepository): RedirectResponse
+    {
+        $userRepository->unblockUser($user);
+        $this->addFlash('success', 'Utilisateur débloqué avec succès.');
+
+        return $this->redirectToRoute('user_list');
+    }
+
+    #[Route('/users', name: 'user_list')]
+    public function listUser(UserRepository $userRepository): Response
+    {
+        $users = $userRepository->findAll();
+
+        return $this->render('user/list.html.twig', [
+            'users' => $users,
+        ]);
+    }
 }

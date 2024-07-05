@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Liste des Signalements</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Type</th>
+                <th>Contenu</th>
+                <th>Date</th>
+                <th>Annonce</th>
+                <th>Utilisateur</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for signalement in signalements %}
+                <tr>
+                    <td>{{ signalement.id }}</td>
+                    <td>{{ signalement.type }}</td>
+                    <td>{{ signalement.contenu }}</td>
+                    <td>{{ signalement.dateSignalement|date('d-m-Y H:i:s') }}</td>
+                    <td><a href="{{ path('show_annonce', {'id': signalement.annonce.id}) }}">{{ signalement.annonce.titre }}</a></td>
+                    <td>{{ signalement.user.nom }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_annonce') }}">Retour à la liste des annonces</a>
+{% endblock %}

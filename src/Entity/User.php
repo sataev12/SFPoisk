@@ -42,6 +42,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 60)]
     private ?string $nom = null;
 
+    
+
     /**
      * @var Collection<int, Annonce>
      */
@@ -77,6 +79,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\OneToMany(targetEntity: Rating::class, mappedBy: 'user')]
     private Collection $ratings;
+
+    #[ORM\Column]
+    private ?bool $isBlocked = null;
 
     // #[ORM\Column(type: Types::DECIMAL, precision: 3, scale: 1, nullable: true)]
     // private ?string $rating = null;
@@ -371,4 +376,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function isBlocked(): ?bool
+    {
+        return $this->isBlocked;
+    }
+
+    public function setBlocked(bool $isBlocked): static
+    {
+        $this->isBlocked = $isBlocked;
+
+        return $this;
+    }
+
+   
 }

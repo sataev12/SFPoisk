@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Liste des Utilisateurs</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Nom</th>
+                <th>Bloqué</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.nom }}</td>
+                    <td>{{ user.isBlocked ? 'Oui' : 'Non' }}</td>
+                    <td>
+                        {% if user.isBlocked %}
+                            <a href="{{ path('user_unblock', {'id': user.id}) }}">Débloquer</a>
+                        {% else %}
+                            <a href="{{ path('user_block', {'id': user.id}) }}">Bloquer</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_annonce') }}">Retour à l'accueil</a>
+{% endblock %}

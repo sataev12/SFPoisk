@@ -70,4 +70,19 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
         return $qb->getSingleScalarResult();  
     }
+
+    // Bloquer ou debloquer l'utilisateur
+    public function blockUser(User $user): void
+    {
+        $user->setBlocked(true);
+        $this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();
+    }
+
+    public function unblockUser(User $user): void
+    {
+        $user->setBlocked(false);
+        $this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();
+    }
 }

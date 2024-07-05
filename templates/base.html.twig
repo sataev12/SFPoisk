@@ -32,6 +32,8 @@
                 {% if is_granted('ROLE_ADMIN') %}
                     <a href="">Panneau d'admin</a>
                     <a href="{{ path('admin_categorie_list')}}"> Catégories</a>
+                    <a href="{{ path('liste_signalements')}}"> Signalements</a>
+                    <a href="{{ path('user_list')}}"> Utilisateurs</a>
                 {% endif %}
             </ul>
         </nav>
