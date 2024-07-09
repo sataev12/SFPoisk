@@ -10,7 +10,8 @@ body {
     height: 100vh;
 }
 
-a {
+a, div {
+    color: inherit;
     text-decoration: none;
 }
 
@@ -37,6 +38,7 @@ nav ul .user {
     display: flex;
     align-items: center;
     flex-direction: column;
+    gap: 0.8em;
 }
 
 .annonce {
@@ -44,21 +46,58 @@ nav ul .user {
     width: 55em;
     border: 1px solid black;
     border-radius: 9px;
+    display: flex;
+    gap: 0.8em;
 }
 
-.description{
-
+.description p{
+    margin-bottom: 0px;
 }
 
 .photos {
     width: 300px; /* Définir la largeur du conteneur */
-    height: 300px; /* Définir la hauteur du conteneur */
-    
+    height: 208px; /* Définir la hauteur du conteneur */
     overflow: hidden;
 }
 
 .photos img {
     width: 100%;
-    height: 100%;
-    object-fit: contain; 
+    height: 13em;
+    object-fit: cover;
+    border-radius: 9px 0 0 9px;
+}
+
+/* les buttons pour ajouter aux favoris */
+
+.btn-succes {
+    width: 10em;
+    height: 2em;
+    border-radius: 5px;
+    background-color: green;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-favoris {
+    width: 10em;
+    height: 2em;
+    border-radius: 5px;
+    background-color: red;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-ajoutRetrait a {
+ 
+}
+
+/* Formulaire de recherche */
+
+.form-inline {
+    display: flex;
+    align-items: center;
 }

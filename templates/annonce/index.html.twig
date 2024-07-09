@@ -28,13 +28,17 @@
                 </div>
                 <div class="description">
                     <h2><a href="{{ path('show_annonce', {'id': annonce.id}) }}">{{ annonce.titre }}</a></h2>
-                    <p>{{ annonce.description }}</p>
                     <p><strong>Ville :</strong> {{ annonce.ville }}</p>
                     <p><strong>Prix :</strong> {{ annonce.prix }} €</p>
+                    <p><strong>Publié : </strong>{{ annonce.dateCreation|date('Y:m:d')}}</p>
                     {% if app.user and annonce.id in favoris %}
-                        <p><a href="{{ path('remove_favori', {'id': annonce.id}) }}" class="btn btn-danger">Retirer des favoris</a></p>
+                        <div class="btn-favoris btn-ajoutRetrait">
+                            <a href="{{ path('remove_favori', {'id': annonce.id}) }}">Retirer des favoris</a>
+                        </div>
                     {% else %}
-                        <p><a href="{{ path('add_favori', {'id': annonce.id}) }}" class="btn btn-success">Ajouter aux favoris</a></p>
+                        <div class="btn-succes btn-ajoutRetrait">
+                            <a href="{{ path('add_favori', {'id': annonce.id}) }}">Ajouter aux favoris</a>
+                        </div>
                     {% endif %}
                 </div>
                 
