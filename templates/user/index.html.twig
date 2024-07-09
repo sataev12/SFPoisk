@@ -6,7 +6,7 @@
     <h1>Informations de l'utilisateur</h1>
 
     <p><strong>Nom : </strong>{{ user.nom }} {% if is_granted('ROLE_ADMIN') %}
-        <a href="">Bloquer</a>
+        a
     {% endif %}</p>
     <p><strong>Email : </strong>{{ user.email }}</p>
     <a href="{{ path('new_message', {'id': user.id }) }}">Message</a>
@@ -14,6 +14,8 @@
 
     <a href="{{ path('user_rate', {'id': user.id }) }}">Evaluation</a>
 
+    
+   
    
 {% endblock %}
 

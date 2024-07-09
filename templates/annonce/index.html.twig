@@ -23,15 +23,21 @@
     <div class="annonces">
         {% for annonce in annonces %}
             <div class="annonce">
-                <h2><a href="{{ path('show_annonce', {'id': annonce.id}) }}">{{ annonce.titre }}</a></h2>
-                <p>{{ annonce.description }}</p>
-                <p><strong>Ville :</strong> {{ annonce.ville }}</p>
-                <p><strong>Prix :</strong> {{ annonce.prix }} €</p>
-                {% if app.user and annonce.id in favoris %}
-                    <p><a href="{{ path('remove_favori', {'id': annonce.id}) }}" class="btn btn-danger">Retirer des favoris</a></p>
-                {% else %}
-                    <p><a href="{{ path('add_favori', {'id': annonce.id}) }}" class="btn btn-success">Ajouter aux favoris</a></p>
-                {% endif %}
+                <div class="photos">
+                    <img src="{{ asset(annonce.photos[0].url) }}" alt="images d'une annonce">
+                </div>
+                <div class="description">
+                    <h2><a href="{{ path('show_annonce', {'id': annonce.id}) }}">{{ annonce.titre }}</a></h2>
+                    <p>{{ annonce.description }}</p>
+                    <p><strong>Ville :</strong> {{ annonce.ville }}</p>
+                    <p><strong>Prix :</strong> {{ annonce.prix }} €</p>
+                    {% if app.user and annonce.id in favoris %}
+                        <p><a href="{{ path('remove_favori', {'id': annonce.id}) }}" class="btn btn-danger">Retirer des favoris</a></p>
+                    {% else %}
+                        <p><a href="{{ path('add_favori', {'id': annonce.id}) }}" class="btn btn-success">Ajouter aux favoris</a></p>
+                    {% endif %}
+                </div>
+                
             </div>
         {% else %}
             <p>Aucune annonce trouvée</p>

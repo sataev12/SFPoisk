@@ -4,6 +4,12 @@
     box-sizing: border-box;
 }
 
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+}
+
 a {
     text-decoration: none;
 }
@@ -23,4 +29,36 @@ nav ul h2{
 
 nav ul .user {
     color: beige;
+}
+
+
+/* La page d'acceuil, la liste des annonces */
+.annonces {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.annonce {
+    background-color: blanchedalmond;
+    width: 55em;
+    border: 1px solid black;
+    border-radius: 9px;
+}
+
+.description{
+
+}
+
+.photos {
+    width: 300px; /* Définir la largeur du conteneur */
+    height: 300px; /* Définir la hauteur du conteneur */
+    
+    overflow: hidden;
+}
+
+.photos img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; 
 }
