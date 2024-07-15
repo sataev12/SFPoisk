@@ -15,30 +15,49 @@ a, div {
     text-decoration: none;
 }
 
-nav{
-    background-color: black;
+nav {
+    background-color: #333;
     color: white;
     display: flex;
-    padding: 0.7em;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-nav ul{
+nav ul {
     display: flex;
     list-style-type: none;
-}
-nav ul h2{
-    color: white;
+    margin: 0;
+    padding: 0;
 }
 
-nav ul .user {
-    color: beige;
+nav ul li {
+    margin: 0 1em;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 0.5em 1em;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+nav ul li a:hover {
+    background-color: #555;
 }
 
 /* Nav-bar */
 
-.logo{
+nav .logo {
     display: flex;
-    flex-direction: row;
+    align-items: center;
+}
+
+nav .logo h2 {
+    margin-right: 0.5em;
+    color: #00AAFF;
 }
 
 .deposer {
@@ -50,6 +69,18 @@ nav ul .user {
     height: 1.8em;
     background-color: #00AAFF;
 
+}
+
+nav .deposer a {
+    background-color: #00AAFF;
+    color: white;
+    padding: 0.5em 1em;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+nav .deposer a:hover {
+    background-color: #008CBA;
 }
 
 
@@ -161,5 +192,230 @@ nav ul .user {
     margin-top: 0.6em;
 }
 
-.nom-categ {
+
+
+/* Styles pour la page de détail d'une annonce */
+.annonce-detail {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
+.annonce-detail h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.annonce-detail .annonce-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.annonce-detail .annonce-info p {
+    font-size: 1.1em;
+    color: #555;
+}
+
+.annonce-detail .annonce-info a {
+    color: #00AAFF;
+    text-decoration: none;
+}
+
+.annonce-detail .annonce-info a:hover {
+    text-decoration: underline;
+}
+
+.annonce-detail .photos {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.annonce-detail .photos img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.annonce-detail .photos img:hover {
+    transform: scale(1.1);
+}
+
+.annonce-detail .actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.annonce-detail .actions a,
+.annonce-detail .actions button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #00AAFF;
+    color: #fff;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.annonce-detail .actions a:hover,
+.annonce-detail .actions button:hover {
+    background-color: #008CBA;
+}
+
+.comment-section {
+    margin-top: 40px;
+}
+
+.comment-section h2 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.comment-section .comment {
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}
+
+.comment-section .comment strong {
+    color: #333;
+}
+
+.comment-section .comment small {
+    color: #999;
+}
+
+.comment-section .comment-actions {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.comment-section .comment-actions a {
+    color: #00AAFF;
+    text-decoration: none;
+}
+
+.comment-section .comment-actions a:hover {
+    text-decoration: underline;
+}
+
+.comment-section form {
+    margin-top: 20px;
+}
+
+.comment-section form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    resize: vertical;
+}
+
+.comment-section form button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #00AAFF;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.comment-section form button:hover {
+    background-color: #008CBA;
+}
+
+
+/* Styles pour le modal d'image */
+.image-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.image-modal .modal-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+}
+
+.image-modal .modal-content img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.image-modal .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 2em;
+    color: #df0000e7;
+    cursor: pointer;
+}
+
+/* Les styles pour le panneau utilisateur et le panneau d'administration */
+
+.container {
+    display: flex;
+}
+
+.sidebar {
+    height: auto;
+    width: 200px;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-right: 1px solid #ddd;
+}
+
+.sidebar h3 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+    color: #00AAFF;
+    text-decoration: none;
+}
+
+.sidebar ul li a:hover {
+    text-decoration: underline;
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+}
+
+

@@ -7,38 +7,58 @@
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         {% endblock %}
-
     </head>
     <body>
         <nav>
+            <div class="logo">
+                <h2>poisk</h2>
+                <img src="{{ asset('img/icon _globe_.png') }}" alt="Une image logo de site">
+            </div>
             <ul>
-                <li class="logo"><h2>poisk</h2><img src="{{ asset('img/icon _globe_.png') }}" alt="Une image logo de site"></li>
                 <li class="deposer"><a href="{{ path('new_annonce') }}">Déposer une annonce</a></li>
-                <li><a href="{{ path('received_messages') }}">Messages</a></li>
-                <li><a href="{{ path('app_annonce') }}"> Mes annonces</a></li>
-                <li><a href="{{ path('view_favoris')}}"> Mes favoris</a></li>
-                {% if  app.user %}
-                    <a href="{{ path('app_user', {'id': app.user.id}) }}">
-                        <li class="user">{{ app.user.nom }}</li>
-                    </a>
-                {% endif %}
+                {# <li><a href="{{ path('received_messages') }}">Messages</a></li> #}
+                <li><a href="{{ path('app_annonce') }}">Annonces</a></li>
+                {# <li><a href="{{ path('view_favoris')}}">Mes favoris</a></li> #}
                 {% if app.user %}
-                    <li><a href="{{ path('app_logout') }}"> Se déconnecter</a></li>
+                    <li class="nav-indicator"><a href="{{ path('app_user', {'id': app.user.id}) }}" class="user">{{ app.user.nom }}</a></li>
+                    <li><a href="{{ path('app_logout') }}">Se déconnecter</a></li>
                 {% else %}
-                    <li><a href="{{ path('app_login') }}"> Se connecter</a></li> 
-                    <li><a href="{{ path('app_register') }}"> S'enregister</a></li> 
+                    <li><a href="{{ path('app_login') }}">Se connecter</a></li>
+                    <li><a href="{{ path('app_register') }}">S'enregister</a></li>
                 {% endif %}
-                {% if is_granted('ROLE_ADMIN') %}
-                    <a href="">Panneau d'admin</a>
-                    <a href="{{ path('admin_categorie_list')}}"> Catégories</a>
-                    <a href="{{ path('liste_signalements')}}"> Signalements</a>
-                    <a href="{{ path('user_list')}}"> Utilisateurs</a>
-                {% endif %}
+                {# {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-indicator"><a href="{{ path('admin_categorie_list')}}">Catégories</a></li>
+                    <li><a href="{{ path('liste_signalements')}}">Signalements</a></li>
+                    <li><a href="{{ path('user_list')}}">Utilisateurs</a></li>
+                {% endif %} #}
             </ul>
         </nav>
-        {% block body %}{% endblock %}
+        <div class="container">
+            <div class="sidebar">
+                {% if app.user %}
+                    <h3>Panneau Utilisateur</h3>
+                    <ul>
+                        <li><a href="{{ path('app_user', {'id': app.user.id}) }}">Mon Profil</a></li>
+                        <li><a href="{{ path('received_messages') }}">Mes Messages</a></li>
+                        <li><a href="{{ path('view_favoris') }}">Mes Favoris</a></li>
+                        <li><a href="{{ path('app_annonce') }}">Mes Annonces</a></li>
+                    </ul>
+                {% endif %}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <h3>Panneau d'Admin</h3>
+                    <ul>
+                        <li><a href="{{ path('admin_categorie_list') }}">Gérer les Catégories</a></li>
+                        <li><a href="{{ path('liste_signalements') }}">Gérer les Signalements</a></li>
+                        <li><a href="{{ path('user_list') }}">Gérer les Utilisateurs</a></li>
+                    </ul>
+                {% endif %}
+            </div>
+            <div class="content">
+                {% block body %}{% endblock %}
+            </div>
+        </div>
         {% block javascripts %}
-                <script src="{{ asset('js/script.js') }}"></script>
+            <script src="{{ asset('js/script.js') }}"></script>
         {% endblock %}
     </body>
 </html>

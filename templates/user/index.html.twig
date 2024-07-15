@@ -9,7 +9,14 @@
         a
     {% endif %}</p>
     <p><strong>Email : </strong>{{ user.email }}</p>
-    <a href="{{ path('new_message', {'id': user.id }) }}">Message</a>
+    {% if app.user %}
+        <a href="{{ path('new_message', {'id': user.id }) }}">Message</a>
+    {% else %}
+    <div>
+        <p>Veuillez <a href="{{ path('app_login') }}">vous connecter</a> pour envoyer une message !</p>
+    </div>
+    {% endif %}
+    
     <p>Ranking : {{ averageRating|number_format(1) }}</p>
 
     <a href="{{ path('user_rate', {'id': user.id }) }}">Evaluation</a>
