@@ -1,23 +1,30 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}Liste des annonces!{% endblock %}
 
 {% block body %}
-    <h1>Liste des annonces</h1>
 
-    {% for categorie in categories %}
-        {{ categorie.nom }}
-    {% endfor %}
+    <div class="ceteg-titre">
+        <h1>Bienvenue sur le Forum des Petites Annonces !</h1>
+        <div class="categories">
+            {% for categorie in categories %}
+                <div class="nom-categ">
+                    {{ categorie.nom }}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="tre"></div>
+    </div>
+    
 
     {# {% for annonce in annonces %}
         <a href="{{ path('show_annonce', {'id': annonce.id})}}">{{ annonce }}</a> <br>
     {% endfor %}   #}
     {{ form_start(RechercheForm, {'attr': {'class': 'form-inline'}}) }}
-    {{ form_widget(RechercheForm.keyword, {'attr': {'class': 'form-control mr-sm-2', 'placeholder': 'Rechercher une annonce...'}}) }}
-    {{ form_widget(RechercheForm.ville, {'attr': {'class': 'form-control mr-sm-2', 'placeholder': 'Ville...'}}) }}
-    {{ form_widget(RechercheForm.minPrix, {'attr': {'class': 'form-control mr-sm-2', 'placeholder': 'Prix min'}}) }}
-    {{ form_widget(RechercheForm.maxPrix, {'attr': {'class': 'form-control mr-sm-2', 'placeholder': 'Prix max'}}) }}
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Rechercher</button>
+    {{ form_widget(RechercheForm.keyword, {'attr': {'class': 'form-control recherche-annonce', 'placeholder': ' Rechercher une annonce...'}}) }}
+    {{ form_widget(RechercheForm.ville, {'attr': {'class': 'form-control ville', 'placeholder': ' Ville...'}}) }}
+    {{ form_widget(RechercheForm.minPrix, {'attr': {'class': 'form-control prix-min', 'placeholder': ' Prix min'}}) }}
+    {{ form_widget(RechercheForm.maxPrix, {'attr': {'class': 'form-control prix-max', 'placeholder': ' Prix max'}}) }}
+    <button class="btn btn-valider " type="submit">Rechercher</button>
     {{ form_end(RechercheForm) }}
 
     <div class="annonces">

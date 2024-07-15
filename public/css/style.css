@@ -17,12 +17,14 @@ a, div {
 
 nav{
     background-color: black;
+    color: white;
     display: flex;
     padding: 0.7em;
 }
 
 nav ul{
     display: flex;
+    list-style-type: none;
 }
 nav ul h2{
     color: white;
@@ -30,6 +32,24 @@ nav ul h2{
 
 nav ul .user {
     color: beige;
+}
+
+/* Nav-bar */
+
+.logo{
+    display: flex;
+    flex-direction: row;
+}
+
+.deposer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    width: 10em;
+    height: 1.8em;
+    background-color: #00AAFF;
+
 }
 
 
@@ -42,7 +62,7 @@ nav ul .user {
 }
 
 .annonce {
-    background-color: blanchedalmond;
+    background-color: rgba(219, 209, 209, 0.24);
     width: 55em;
     border: 1px solid black;
     border-radius: 9px;
@@ -91,13 +111,55 @@ nav ul .user {
     justify-content: center;
 }
 
-.btn-ajoutRetrait a {
- 
-}
-
-/* Formulaire de recherche */
+/* Formulaire de recherche/categories */
 
 .form-inline {
     display: flex;
+    justify-content: center;
+    margin-bottom: 1em;
+}
+
+.form-control {
+    width: 13em;
+    height: 2.5em;
+    border-bottom: #00AAFF 2px solid;
+    border-top: #00AAFF 2px solid;
+    border-left: #00AAFF 1px solid;
+    border-right: #00AAFF 1px solid;
+}
+
+.btn-valider {
+    width: 14em;
+    height: 2.5em;
+    background-color: #00AAFF;
+    border: #00AAFF 1px solid;
+    border-radius: 0 5px 5px 0;
+}
+
+.recherche-annonce {
+    border-radius: 5px 0 0 5px;
+}
+
+.ceteg-titre{
+    display: flex;
+    flex-direction: column;
     align-items: center;
+}
+
+.categories {
+    display: flex;
+    justify-content: center;
+    gap: 3.7em;
+}
+
+.tre{
+    width: 55em;
+    height: 3px;
+    background-color: black;
+    border-radius: 5px;
+    margin-bottom: 1.5em;
+    margin-top: 0.6em;
+}
+
+.nom-categ {
 }
