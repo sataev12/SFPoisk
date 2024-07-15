@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class AdminController extends AbstractController
 {
@@ -74,11 +75,18 @@ class AdminController extends AbstractController
     // Pour la suppression des catégories
     #[Route('/admin/categorie/{id}/delete', name: 'admin_categorie_delete', methods: ['POST'])]
     #[IsGranted('ROLE_ADMIN')]
-    public function deleteCategorie(Categorie $categorie, EntityManagerInterface $entityManager): Response
+    public function deleteCategorie(Categorie $categorie, EntityManagerInterface $entityManager, SessionInterface $session): Response
     {
+
+        if($categorie->getAnnonce()->count() > 0) {
+            $this->addFlash('error', 'Cette catégorie contient des annonces. Supprimer d\'abord les annonces associes.');
+            return $this->redirectToRoute('admin_categorie_list');
+        }
+
         $entityManager->remove($categorie);
         $entityManager->flush();
 
+        $this->addFlash('success', 'Catégorie supprimé avec succès.');
         return $this->redirectToRoute('admin_categorie_list');
     }
 }

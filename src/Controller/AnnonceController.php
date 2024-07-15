@@ -51,6 +51,23 @@ class AnnonceController extends AbstractController
         ]);
     }
 
+    // Afficher les annonces par catégories
+    #[Route('/categorie/{id}', name: 'annonces_par_categorie')]
+    public function annoncesParCategorie(Request $request, Categorie $categorie, AnnonceRepository $annonceRepository, CategorieRepository $categorieRepository, SessionInterface $session): Response
+    {
+        $annonces = $annonceRepository->findBy(['categorie' => $categorie], ['dateCreation' => 'DESC']);
+        $categories = $categorieRepository->findAll();
+
+       
+        
+
+        return $this->render('annonce/annonce_par_categorie.html.twig', [
+            'annonces' => $annonces,
+            'favoris' => $session->get('favoris', []),
+            'categories' => $categories,
+        ]);
+    }
+
     #[Route('/annonce/new', name: 'new_annonce')]
     #[Route('/annonce/{id}/edit', name: 'edit_annonce')]
     public function new_edit(Annonce $annonce = null, Request $request, EntityManagerInterface $entityManager): Response

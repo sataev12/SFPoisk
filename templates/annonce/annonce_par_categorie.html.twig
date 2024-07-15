@@ -16,16 +16,7 @@
     </div>
     
 
-    {# {% for annonce in annonces %}
-        <a href="{{ path('show_annonce', {'id': annonce.id})}}">{{ annonce }}</a> <br>
-    {% endfor %}   #}
-    {{ form_start(RechercheForm, {'attr': {'class': 'form-inline'}}) }}
-    {{ form_widget(RechercheForm.keyword, {'attr': {'class': 'form-control recherche-annonce', 'placeholder': ' Rechercher une annonce...'}}) }}
-    {{ form_widget(RechercheForm.ville, {'attr': {'class': 'form-control ville', 'placeholder': ' Ville...'}}) }}
-    {{ form_widget(RechercheForm.minPrix, {'attr': {'class': 'form-control prix-min', 'placeholder': ' Prix min'}}) }}
-    {{ form_widget(RechercheForm.maxPrix, {'attr': {'class': 'form-control prix-max', 'placeholder': ' Prix max'}}) }}
-    <button class="btn btn-valider " type="submit">Rechercher</button>
-    {{ form_end(RechercheForm) }}
+   
 
     <div class="annonces">
         {% for annonce in annonces %}

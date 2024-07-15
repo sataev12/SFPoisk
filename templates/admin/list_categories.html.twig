@@ -4,6 +4,21 @@
 
 {% block body %}
     <h1>Liste des catégories</h1>
+
+    {# Pour afficher les message error/success #}
+
+    {% for message in app.flashes('success') %}
+        <div class="alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    
+    {% for message in app.flashes('error') %}
+        <div class="alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
+
     <ul>
         {% for categorie in categories %}
             <li>
