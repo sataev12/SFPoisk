@@ -38,11 +38,18 @@
             {% else %}
                 Aucun commentaire pour cette annonce.    
             {% endfor %}
+
+        {% if app.user %}    
         <h2>Ajouter une commentaire :</h2>
         {{ form_start(formCommentaire) }}
             {{ form_row(formCommentaire.contenu) }}
             {# Les champs "annonce" et "utilisateur" ne sont pas nécessaires dans le formulaire car ils sont définis en backend #}
             <button type="submit">Ajouter</button>
-        {{ form_end(formCommentaire) }}    
+        {{ form_end(formCommentaire) }}
+        {% else %}
+            <div>
+                <p>Veuillez <a href="{{ path('app_login') }}">vous connecter</a> pour ajouter un commentaire !</p>
+            </div>
+        {% endif %}
     </p>
 {% endblock %}
