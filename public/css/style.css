@@ -148,27 +148,44 @@ nav .deposer a:hover {
     display: flex;
     justify-content: center;
     margin-bottom: 1em;
+    
 }
 
 .form-control {
-    width: 13em;
+    width: 11em;
     height: 2.5em;
     border-bottom: #00AAFF 2px solid;
     border-top: #00AAFF 2px solid;
     border-left: #00AAFF 1px solid;
     border-right: #00AAFF 1px solid;
+    border-radius: 0;
+    padding: 0.5em;
+    font-size: 1em;
 }
 
 .btn-valider {
-    width: 14em;
+    width: 11em;
     height: 2.5em;
     background-color: #00AAFF;
     border: #00AAFF 1px solid;
-    border-radius: 0 5px 5px 0;
+    border-radius: 0 5px 5px 0; /* Ajustement des coins arrondis */
+    color: white; /* Couleur du texte */
+    font-size: 1em; /* Taille de la police */
+    cursor: pointer; /* Curseur de pointeur */
+    transition: background-color 0.3s;
+}
+
+.btn-valider:hover {
+    background-color: #008CBA; /* Couleur de fond au survol */
 }
 
 .recherche-annonce {
     border-radius: 5px 0 0 5px;
+}
+
+.recherche-form {
+    padding: 1em; /* Padding interne du formulaire */
+    border-radius: 10px; /* Coins arrondis du formulaire */
 }
 
 /* Styles pour les catégories */
@@ -439,6 +456,8 @@ nav .deposer a:hover {
 }
 
 .content {
+    display: flex;
+    flex-direction: column;
     flex: 1;
     padding: 20px;
 }
