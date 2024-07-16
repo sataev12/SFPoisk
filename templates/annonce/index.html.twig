@@ -3,17 +3,17 @@
 
 {% block body %}
 
-    <div class="ceteg-titre">
-        <h1>Bienvenue sur le Forum des Petites Annonces !</h1>
-        <div class="categories">
-            {% for categorie in categories %}
-                <div class="nom-categ">
-                    <a href="{{ path('annonces_par_categorie', {'id': categorie.id}) }}">{{ categorie.nom }}</a>
-                </div>
-            {% endfor %}
-        </div>
-        <div class="tre"></div>
+<div class="ceteg-titre">
+    <h1>Bienvenue sur le Forum des Petites Annonces !</h1>
+    <div class="categories">
+        {% for categorie in categories %}
+            <div class="nom-categ">
+                <a href="{{ path('annonces_par_categorie', {'id': categorie.id}) }}">{{ categorie.nom }}</a>
+            </div>
+        {% endfor %}
     </div>
+    <div class="tre"></div>
+</div>
     
 
     {# {% for annonce in annonces %}
