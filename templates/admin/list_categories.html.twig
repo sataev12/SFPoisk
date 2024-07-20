@@ -3,36 +3,48 @@
 {% block title %}Liste des catégories{% endblock %}
 
 {% block body %}
-    <h1>Liste des catégories</h1>
-
-    {# Pour afficher les message error/success #}
-
+    {# Pour afficher les messages d'erreur/succès #}
     {% for message in app.flashes('success') %}
-        <div class="alert-success">
+        <div class="alert alert-success">
             {{ message }}
         </div>
     {% endfor %}
     
     {% for message in app.flashes('error') %}
-        <div class="alert-danger">
+        <div class="alert alert-danger">
             {{ message }}
         </div>
     {% endfor %}
 
-    <ul class="category-list">
-        {% for categorie in categories %}
-            <li class="category-item">
-                {{ categorie.nom }}
-                {% if is_granted('ROLE_ADMIN') %}
-                    <a href="{{ path('admin_categorie_edit', {'id': categorie.id}) }}" class="btn btn-warning">Modifier</a>
-                    <form action="{{ path('admin_categorie_delete', {'id': categorie.id}) }}" method="post" style="display:inline;">
-                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ categorie.id) }}">
-                        <button class="btn btn-danger">Supprimer</button>
-                    </form>
-                {% endif %}
-            </li>
-        {% endfor %}
-    </ul>
+    <h1>Liste des catégories</h1>
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Modifier</th>
+                <th>Supprimer</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for categorie in categories %}
+                <tr>
+                    <td>{{ categorie.nom }}</td> 
+                    {% if is_granted('ROLE_ADMIN') %}   
+                    <td>
+                            <a href="{{ path('admin_categorie_edit', {'id': categorie.id}) }}" class="btn btn-warning">Modifier</a>    
+                    </td>
+                    <td>
+                        <form action="{{ path('admin_categorie_delete', {'id': categorie.id}) }}" method="post" class="d-inline">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ categorie.id) }}">
+                            <button class="btn btn-danger">Supprimer</button>
+                        </form>
+                    </td>
+                    {% endif %}
+                </tr>
+            {% endfor %}  
+        </tbody>
+    </table>
+
     {% if is_granted('ROLE_ADMIN') %}
         <a href="{{ path('admin_categorie_new') }}" class="btn btn-primary">Créer une nouvelle catégorie</a>
     {% else %}
