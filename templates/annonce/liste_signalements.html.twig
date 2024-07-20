@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Liste des Signalements</h1>
+    <h1 class="title">Liste des Signalements</h1>
 
-    <table>
+    <table class="styled-table">
         <thead>
             <tr>
                 <th>ID</th>
@@ -28,5 +28,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_annonce') }}">Retour à la liste des annonces</a>
+    <a href="{{ path('app_annonce') }}" class="back-link">Retour à la liste des annonces</a>
 {% endblock %}

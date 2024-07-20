@@ -3,7 +3,7 @@
 {% block body %}
     <h1>Liste des Utilisateurs</h1>
 
-    <table>
+    <table class="user-table">
         <thead>
             <tr>
                 <th>ID</th>
@@ -22,9 +22,9 @@
                     <td>{{ user.isBlocked ? 'Oui' : 'Non' }}</td>
                     <td>
                         {% if user.isBlocked %}
-                            <a href="{{ path('user_unblock', {'id': user.id}) }}">Débloquer</a>
+                            <a href="{{ path('user_unblock', {'id': user.id}) }}" class="btn btn-unblock">Débloquer</a>
                         {% else %}
-                            <a href="{{ path('user_block', {'id': user.id}) }}">Bloquer</a>
+                            <a href="{{ path('user_block', {'id': user.id}) }}" class="btn btn-block">Bloquer</a>
                         {% endif %}
                     </td>
                 </tr>
@@ -32,5 +32,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_annonce') }}">Retour à l'accueil</a>
+    <a href="{{ path('app_annonce') }}" class="btn btn-back">Retour à l'accueil</a>
 {% endblock %}

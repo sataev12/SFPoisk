@@ -19,7 +19,7 @@
     {# {% for annonce in annonces %}
         <a href="{{ path('show_annonce', {'id': annonce.id})}}">{{ annonce }}</a> <br>
     {% endfor %}   #}
-    {{ form_start(RechercheForm, {'attr': {'class': 'form-inline recherche-form'}}) }}
+    {{ form_start(RechercheForm, {'attr': {'class': 'form-inline recherche-for'}}) }}
     {{ form_widget(RechercheForm.keyword, {'attr': {'class': 'form-control recherche-annonce', 'placeholder': ' Rechercher une annonce...'}}) }}
     {{ form_widget(RechercheForm.ville, {'attr': {'class': 'form-control ville', 'placeholder': ' Ville...'}}) }}
     {{ form_widget(RechercheForm.minPrix, {'attr': {'class': 'form-control prix-min', 'placeholder': ' Prix min'}}) }}
@@ -31,7 +31,11 @@
         {% for annonce in annonces %}
             <div class="annonce">
                 <div class="photos">
-                    <img src="{{ asset(annonce.photos[0].url) }}" alt="images d'une annonce">
+                    {% if annonce.photos|length > 0 %}
+                        <img src="{{ asset(annonce.photos[0].url) }}" alt="images d'une annonce">
+                    {% else %}
+                        <img src="{{ asset('img/defaut.png') }}" alt="image par défaut">
+                    {% endif %}
                 </div>
                 <div class="description">
                     <h2><a href="{{ path('show_annonce', {'id': annonce.id}) }}">{{ annonce.titre }}</a></h2>

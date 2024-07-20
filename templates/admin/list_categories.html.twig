@@ -19,9 +19,9 @@
         </div>
     {% endfor %}
 
-    <ul>
+    <ul class="category-list">
         {% for categorie in categories %}
-            <li>
+            <li class="category-item">
                 {{ categorie.nom }}
                 {% if is_granted('ROLE_ADMIN') %}
                     <a href="{{ path('admin_categorie_edit', {'id': categorie.id}) }}" class="btn btn-warning">Modifier</a>
