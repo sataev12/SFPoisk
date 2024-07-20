@@ -14,8 +14,9 @@ use App\Form\CommentaireType;
 use App\Form\SignalementType;
 use App\Repository\AnnonceRepository;
 use App\Repository\CategorieRepository;
-use App\Repository\SignalementRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\SignalementRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -27,7 +28,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 class AnnonceController extends AbstractController
 {
     #[Route('/annonce', name: 'app_annonce')]
-    public function index(Request $request, AnnonceRepository $annonceRepository, CategorieRepository $categorieRepository , SessionInterface $session): Response
+    public function index(Request $request, AnnonceRepository $annonceRepository, CategorieRepository $categorieRepository, PaginatorInterface $paginator, SessionInterface $session): Response
     {
         // $annonces = $entityManager->getRepository(Annonce::class)->findAll();
         // $annonces = $annonceRepository->findAll();
@@ -40,7 +41,15 @@ class AnnonceController extends AbstractController
         $ville = $form->get('ville')->getData();
         $minPrix = $form->get('minPrix')->getData();
         $maxPrix = $form->get('maxPrix')->getData();
-        $annonces = $keyword ? $annonceRepository->rechercheAnnonce($keyword, $ville, $minPrix, $maxPrix) : $annonceRepository->findBy([], ['dateCreation' => 'DESC']);
+        
+        $query = $keyword ? $annonceRepository->rechercheAnnonce($keyword, $ville, $minPrix, $maxPrix) : $annonceRepository->findBy([], ['dateCreation' => 'DESC']);
+
+        $annonces = $paginator->paginate(
+            $query, // Query or array
+            $request->query->getInt('page', 1), // Current page number, default to 1
+            10 // Items per page
+        );
+
         
         $categories = $categorieRepository->findAll();
         return $this->render('annonce/index.html.twig', [

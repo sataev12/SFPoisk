@@ -686,6 +686,32 @@ nav .deposer a:hover {
     display: inline-block;
 }
 
+/* Styles pour la pagination */
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination a, .pagination span {
+    padding: 10px 15px;
+    /* border: 1px solid #ddd; */
+    color: #333;
+    text-decoration: none;
+}
+
+.pagination a:hover {
+    background-color: #00AAFF;
+    color: white;
+}
+
+.pagination .current {
+    background-color: #00AAFF;
+    color: white;
+    border: 1px solid #00AAFF;
+}
+
 
 
 

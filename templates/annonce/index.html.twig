@@ -58,4 +58,10 @@
             <p>Aucune annonce trouvée</p>
         {% endfor %}
     </div>
+
+    
+    {# Render pagination controls #}
+    <div class="pagination">
+        {{ knp_pagination_render(annonces) }}
+    </div>
 {% endblock %}
