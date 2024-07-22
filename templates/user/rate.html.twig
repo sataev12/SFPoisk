@@ -9,16 +9,21 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Évaluer {{ user.nom }}</h1>
-    {{ form_start(form) }}
-        <div class="stars">
-            {% for i in 1..5 %}
-                <i class="fa fa-star star" data-value="{{ i }}"></i>
-            {% endfor %}
-        </div>
-        {{ form_widget(form.rating) }}
-        <button type="submit" class="btn">Soumettre</button>
-    {{ form_end(form) }}
+    <div class="block-evaluation">
+        <h1>Évaluer {{ user.nom }}</h1>
+        {{ form_start(form, { 'attr' : { 'class': 'block-form' } }) }}
+ 
+ 
+            <div class="stars">
+                {% for i in 1..5 %}
+                    <i class="fa fa-star star" data-value="{{ i }}"></i>
+                {% endfor %}
+            </div>
+            {{ form_widget(form.rating) }}
+            <button type="submit" class="btn btn-sabmit">Soumettre</button>
+        {{ form_end(form) }}
+    </div>
+    
 {% endblock %}
 
 

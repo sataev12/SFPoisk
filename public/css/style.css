@@ -788,6 +788,31 @@ nav .deposer a:hover {
     color: gold; 
 }
 
+.block-evaluation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+}
+
+.block-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+}
+
+.block-evaluation .btn-sabmit {
+    background-color: #00AAFF;
+    border: none;
+}
+
+.block-evaluation .btn-sabmit:hover {
+    background-color: #008CBA;
+}
+
+
+
 
 
 

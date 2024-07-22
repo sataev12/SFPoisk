@@ -8,12 +8,14 @@ use App\Entity\Annonce;
 use App\Entity\Categorie;
 use App\Form\AnnonceType;
 use App\Entity\Commentaire;
+use App\Entity\Favoris;
 use App\Entity\Signalement;
 use App\Form\RechercheType;
 use App\Form\CommentaireType;
 use App\Form\SignalementType;
 use App\Repository\AnnonceRepository;
 use App\Repository\CategorieRepository;
+use App\Repository\FavorisRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\SignalementRepository;
 use Knp\Component\Pager\PaginatorInterface;
@@ -171,46 +173,49 @@ class AnnonceController extends AbstractController
 
     }
 
-
+    // La partie dedie pour ajout/suppression des favoris
     #[Route('/annonce/{id}/favori', name: 'add_favori')]
-    public function addFavori(Annonce $annonce, SessionInterface $session): Response
+    public function addFavori(Annonce $annonce, EntityManagerInterface $entityManager, FavorisRepository $favorisRepository): Response
     {
-        $favoris = $session->get('favoris', []);
+        $user = $this->getUser();
+        $favori = $favorisRepository->findOneBy(['user' => $user, 'annonce' => $annonce]);
 
         // Ajoutez l'annonce aux favoris si elle n'y est pas déjà
-        if(!in_array($annonce->getId(), $favoris)) {
-            $favoris[] = $annonce->getId();
+        if(!$favori) {
+            $favori = new Favoris();
+            $favori->setUser($user);
+            $favori->setAnnonce($annonce);
+            $entityManager->persist($favori);
+            $entityManager->flush();
         }
-
-        $session->set('favoris', $favoris);
 
         return $this->redirectToRoute('show_annonce', ['id' => $annonce->getId()]);
     }
 
     // Ajoutez cette méthode pour afficher les favoris
     #[Route('/favoris', name: 'view_favoris')]
-    public function viewFavoris(SessionInterface $session, AnnonceRepository $annonceRepository): Response
+    public function viewFavoris(FavorisRepository $favorisRepository): Response
     {
-        $favoris = $session->get('favoris', []);
-        $annonces = $annonceRepository->findBy(['id' => $favoris]);
+        $user = $this->getUser();
+        $favoris = $favorisRepository->findBy(['user' => $user]);
+        
 
         return $this->render('annonce/favoris.html.twig', [
-            'annonces' => $annonces,
+            'favoris' => $favoris,
         ]);
     }
 
     // Suppression de favoris
     #[Route('/annonce/{id}/favori/remove', name: 'remove_favori')]
-    public function removeFavori(Annonce $annonce, SessionInterface $session): Response
+    public function removeFavori(Annonce $annonce, EntityManagerInterface $entityManager, FavorisRepository $favorisRepository): Response
     {
-        $favoris = $session->get('favoris', []);
+        $user = $this->getUser();
+        $favori = $favorisRepository->findOneBy(['user' => $user, 'annonce' => $annonce]);
 
-        // Supprimer l'annonce des favoris si elle y est
-        if(in_array($annonce->getId(), $favoris)) {
-            $favoris = array_diff($favoris, [$annonce->getId()]);
+        if ($favori) {
+            $entityManager->remove($favori);
+            $entityManager->flush();
         }
-
-        $session->set('favoris', $favoris);
 
         return $this->redirectToRoute('view_favoris');
     }

@@ -6,14 +6,13 @@
     <h1>Mes Favoris</h1>
 
     <div class="annonces">
-        {% for annonce in annonces %}
+        {% for favori in favoris %}
             <div class="annonce">
-                <h2>{{ annonce.titre }}</h2>
-                <p>{{ annonce.description }}</p>
-                <p><strong>Ville :</strong> {{ annonce.ville }}</p>
-                <p><strong>Prix :</strong> {{ annonce.prix }} €</p>
-                <p><a href="{{ path('show_annonce', {'id': annonce.id}) }}">Voir l'annonce</a></p>
-                
+                <h2>{{ favori.annonce.titre }}</h2>
+                <p>{{ favori.annonce.description }}</p>
+                <p><strong>Ville :</strong> {{ favori.annonce.ville }}</p>
+                <p><strong>Prix :</strong> {{ favori.annonce.prix }} €</p>
+                <p><a href="{{ path('show_annonce', {'id': favori.annonce.id}) }}">Voir l'annonce</a></p>
             </div>
         {% else %}
             <p>Aucune annonce en favoris</p>

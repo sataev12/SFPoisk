@@ -61,11 +61,18 @@ class Annonce
     #[ORM\JoinColumn(nullable: false)]
     private ?User $publier = null;
 
+    /**
+     * @var Collection<int, Favoris>
+     */
+    #[ORM\OneToMany(targetEntity: Favoris::class, mappedBy: 'annonce')]
+    private Collection $favoris;
+
     public function __construct()
     {
         $this->commentaire = new ArrayCollection();
         $this->signalements = new ArrayCollection();
         $this->photos = new ArrayCollection();
+        $this->favoris = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -260,6 +267,36 @@ class Annonce
     public function setPublier(?User $publier): static
     {
         $this->publier = $publier;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Favoris>
+     */
+    public function getFavoris(): Collection
+    {
+        return $this->favoris;
+    }
+
+    public function addFavori(Favoris $favori): static
+    {
+        if (!$this->favoris->contains($favori)) {
+            $this->favoris->add($favori);
+            $favori->setAnnonce($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavori(Favoris $favori): static
+    {
+        if ($this->favoris->removeElement($favori)) {
+            // set the owning side to null (unless already changed)
+            if ($favori->getAnnonce() === $this) {
+                $favori->setAnnonce(null);
+            }
+        }
 
         return $this;
     }
