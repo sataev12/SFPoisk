@@ -3,27 +3,27 @@
 {% block title %}Informations de l'utilisateur!{% endblock %}
 
 {% block body %}
-    <h1>Informations de l'utilisateur</h1>
+    <div class="user-info-container">
+        <h1>Informations de l'utilisateur</h1>
 
-    <p><strong>Nom : </strong>{{ user.nom }} {% if is_granted('ROLE_ADMIN') %}
-        a
-    {% endif %}</p>
-    <p><strong>Email : </strong>{{ user.email }}</p>
-    {% if app.user %}
-        <a href="{{ path('new_message', {'id': user.id }) }}">Message</a>
-    {% else %}
-    <div>
-        <p>Veuillez <a href="{{ path('app_login') }}">vous connecter</a> pour envoyer une message !</p>
+        <div class="user-details">
+            <p><strong>Nom : </strong>{{ user.nom }} {% if is_granted('ROLE_ADMIN') %}{% endif %}</p>
+            <p><strong>Email : </strong>{{ user.email }}</p>
+                {% if app.user %}
+                    <a href="{{ path('new_message', {'id': user.id }) }}" class="btn btn-primary">Message</a>
+                {% else %}
+                <div class="login-prompt">
+                    <p>Veuillez <a href="{{ path('app_login') }}">vous connecter</a> pour envoyer une message !</p>
+                </div>
+                {% endif %}
+                
+                <p>Ranking : {{ averageRating|number_format(1) }}</p>
+        
+                <a href="{{ path('user_rate', {'id': user.id }) }}" class="btn btn-secondary">Evaluation</a>
+        </div>
+        
     </div>
-    {% endif %}
     
-    <p>Ranking : {{ averageRating|number_format(1) }}</p>
-
-    <a href="{{ path('user_rate', {'id': user.id }) }}">Evaluation</a>
-
-    
-   
-   
 {% endblock %}
 
 

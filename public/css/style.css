@@ -30,6 +30,7 @@ nav ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
+    align-items: center;
 }
 
 nav ul li {
@@ -65,7 +66,7 @@ nav .logo h2 {
     align-items: center;
     justify-content: center;
     border-radius: 5px;
-    width: 10em;
+    width: 11em;
     height: 1.8em;
     background-color: #00AAFF;
 
@@ -712,6 +713,80 @@ nav .deposer a:hover {
     border: 1px solid #00AAFF;
 }
 
+/* Les styles pour information d'utilisateurs */
+
+.user-info-container{
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.user-info-container h1{
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.user-details {
+    font-size: 1.1em;
+    color: #555;
+}
+
+.user-details p{
+    margin-bottom: 10px;
+}
+
+.user-details .btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.user-details .btn-primary{
+    background-color: #00AAFF
+}
+
+.user-details .btn-primary:hover{
+    background-color: #008CBA;
+}
+
+.user-details .btn-secondary {
+    background-color: #28a745;
+}
+
+.user-details .btn-secondary:hover {
+    background-color: #218838;
+}
+
+.login-prompt {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+/* les styles pour la page de ranking */
+
+.stars {
+    cursor: pointer;
+}
+.star {
+    font-size: 2em;
+    color: gray;
+}
+.star.selected {
+    color: gold; 
+}
 
 
 

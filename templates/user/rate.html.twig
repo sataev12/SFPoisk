@@ -6,19 +6,6 @@
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        .stars {
-            cursor: pointer;
-        }
-        .star {
-            font-size: 2em;
-            color: gray;
-        }
-        .star.selected {
-            color: gold; 
-
-        }
-    </style>
 {% endblock %}
 
 {% block body %}
@@ -34,25 +21,5 @@
     {{ form_end(form) }}
 {% endblock %}
 
-{% block javascripts %}
-    {{ parent() }}
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const stars = document.querySelectorAll('.star');
-            const ratingValue = document.getElementById('rating_rating');
-
-            stars.forEach(star => {
-                star.addEventListener('click', function() {
-                    const value = this.getAttribute('data-value');
-                    ratingValue.value = value;
-                    stars.forEach(s => s.classList.remove('selected'));
-                    for (let i = 0; i < value; i++) {
-                        stars[i].classList.add('selected');
-                    }
-                });
-            });
-        });
-    </script>
-{% endblock %}
 
 
