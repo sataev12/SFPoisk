@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Pour le ranking d'un utilisateur
+// Pour le classement  des utilisateurs
 
 document.addEventListener('DOMContentLoaded', function() {
     const stars = document.querySelectorAll('.star');
@@ -43,5 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+// Gérer le clic sur le bouton d'ajout/retrait des favoris
 
 

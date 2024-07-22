@@ -29,38 +29,45 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class AnnonceController extends AbstractController
 {
-    #[Route('/annonce', name: 'app_annonce')]
-    public function index(Request $request, AnnonceRepository $annonceRepository, CategorieRepository $categorieRepository, PaginatorInterface $paginator, SessionInterface $session): Response
-    {
-        // $annonces = $entityManager->getRepository(Annonce::class)->findAll();
-        // $annonces = $annonceRepository->findAll();
-        
 
-        $form = $this->createForm(RechercheType::class);
-        $form->handleRequest($request);
+#[Route('/annonce', name: 'app_annonce')]
+public function index(Request $request, AnnonceRepository $annonceRepository,  CategorieRepository $categorieRepository,  PaginatorInterface $paginator,  FavorisRepository $favorisRepository): Response 
+{
+    $form = $this->createForm(RechercheType::class);
+    $form->handleRequest($request);
 
-        $keyword = $form->get('keyword')->getData();
-        $ville = $form->get('ville')->getData();
-        $minPrix = $form->get('minPrix')->getData();
-        $maxPrix = $form->get('maxPrix')->getData();
-        
-        $query = $keyword ? $annonceRepository->rechercheAnnonce($keyword, $ville, $minPrix, $maxPrix) : $annonceRepository->findBy([], ['dateCreation' => 'DESC']);
+    $keyword = $form->get('keyword')->getData();
+    $ville = $form->get('ville')->getData();
+    $minPrix = $form->get('minPrix')->getData();
+    $maxPrix = $form->get('maxPrix')->getData();
+    
+    $query = $keyword ? $annonceRepository->rechercheAnnonce($keyword, $ville, $minPrix, $maxPrix) : $annonceRepository->findBy([], ['dateCreation' => 'DESC']);
 
-        $annonces = $paginator->paginate(
-            $query, // Query or array
-            $request->query->getInt('page', 1), // Current page number, default to 1
-            10 // Items per page
-        );
+    $annonces = $paginator->paginate(
+        $query, // Query or array
+        $request->query->getInt('page', 1), // Current page number, default to 1
+        10 // Items per page
+    );
 
-        
-        $categories = $categorieRepository->findAll();
-        return $this->render('annonce/index.html.twig', [
-            'annonces' => $annonces,
-            'RechercheForm' => $form->createView(),
-            'favoris' => $session->get('favoris', []),
-            'categories' => $categories,
-        ]);
+    $user = $this->getUser();
+    $favorisAnnoncesIds = [];
+
+    if ($user) {
+        $favoris = $favorisRepository->findBy(['user' => $user]);
+        foreach ($favoris as $favori) {
+            $favorisAnnoncesIds[] = $favori->getAnnonce()->getId();
+        }
     }
+
+    $categories = $categorieRepository->findAll();
+
+    return $this->render('annonce/index.html.twig', [
+        'annonces' => $annonces,
+        'RechercheForm' => $form->createView(),
+        'favorisAnnoncesIds' => $favorisAnnoncesIds,
+        'categories' => $categories,
+    ]);
+}
 
     // Afficher les annonces par catégories
     #[Route('/categorie/{id}', name: 'annonces_par_categorie')]

@@ -42,14 +42,16 @@
                     <p><strong>Ville :</strong> {{ annonce.ville }}</p>
                     <p><strong>Prix :</strong> {{ annonce.prix }} €</p>
                     <p><strong>Publié : </strong>{{ annonce.dateCreation|date('Y:m:d')}}</p>
-                    {% if app.user and annonce.id in favoris %}
-                        <div class="btn-favoris btn-ajoutRetrait">
-                            <a href="{{ path('remove_favori', {'id': annonce.id}) }}">Retirer des favoris</a>
-                        </div>
-                    {% else %}
-                        <div class="btn-succes btn-ajoutRetrait">
-                            <a href="{{ path('add_favori', {'id': annonce.id}) }}">Ajouter aux favoris</a>
-                        </div>
+                    {% if app.user %}
+                        {% if annonce.id in favorisAnnoncesIds %}
+                            <div class="btn-favoris btn-ajoutRetrait">
+                                <a href="{{ path('remove_favori', {'id': annonce.id}) }}">Retirer des favoris</a>
+                            </div>
+                        {% else %}
+                            <div class="btn-succes btn-ajoutRetrait">
+                                <a href="{{ path('add_favori', {'id': annonce.id}) }}">Ajouter aux favoris</a>
+                            </div>
+                        {% endif %}
                     {% endif %}
                 </div>
                 
