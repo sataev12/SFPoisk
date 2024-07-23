@@ -12,7 +12,7 @@
                 {% if app.user %}
                     <a href="{{ path('new_message', {'id': user.id }) }}" class="btn btn-primary">Message</a>
                 {% else %}
-                <div class="login-prompt">
+                <div class="login-p">
                     <p>Veuillez <a href="{{ path('app_login') }}">vous connecter</a> pour envoyer une message !</p>
                 </div>
                 {% endif %}
