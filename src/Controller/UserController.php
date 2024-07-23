@@ -67,6 +67,8 @@ class UserController extends AbstractController
         return $this->redirectToRoute('user_list');
     }
 
+     
+
     #[Route('/users', name: 'user_list')]
     public function listUser(UserRepository $userRepository): Response
     {
@@ -75,5 +77,19 @@ class UserController extends AbstractController
         return $this->render('user/list.html.twig', [
             'users' => $users,
         ]);
+    }
+
+    // Une méthode pour gérer la demande de suppression de compte
+
+    #[Route('/user/delete/{id}', name: 'user_delete')]
+    public function deleteUser(User $user, UserRepository $userRepository): RedirectResponse
+    {
+        // Anonymiser l'utilisateur
+        $userRepository->anonymizeUser($user);
+
+        // Optionnel : ajouter un message flash
+        $this->addFlash('success', 'Votre compte a été supprimé avec succès.');
+
+        return $this->redirectToRoute('user_list'); 
     }
 }

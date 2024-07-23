@@ -85,4 +85,14 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
     }
+
+    // Methode d'anonymisation
+    public function anonymizeUser(User $user): void
+    {
+        $user->setNom('Anonyme');
+        $user->setEmail('anonyme@example.com');
+        $user->setBlocked(true); // Optionnel : bloquer l'utilisateur
+        $this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();
+    }
 }
