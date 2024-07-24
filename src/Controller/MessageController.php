@@ -6,6 +6,7 @@ use App\Entity\Message;
 use App\Entity\User;
 use App\Form\MessageType;
 use App\Repository\MessageRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -41,6 +42,11 @@ class MessageController extends AbstractController
             // Régler automatiquement la date d'envoi
             $message->setDateEnvoi(new \DateTime());
 
+            // Mettre à jour le nombre de nouveaux messages pour le destinataire
+            $userDestinataire = $message->getDestinataire();
+            $userDestinataire->setNouveauxMessages($userDestinataire->getNouveauxMessages() + 1);
+            $entityManager->persist($userDestinataire);
+
             $entityManager->persist($message);
             $entityManager->flush();
 
@@ -53,13 +59,19 @@ class MessageController extends AbstractController
     }
 
     #[Route('/messages/recus', name: 'received_messages')]
-    public function receivedMessages(MessageRepository $messageRepository): Response
+    public function receivedMessages(EntityManagerInterface $entityManager, MessageRepository $messageRepository, UserRepository $userRepository): Response
     {
+
         $user = $this->getUser();
         $messages = $messageRepository->findBy(['destinataire' => $user], ['dateEnvoi' => 'DESC']);
 
+        $userRepository->updateNewMessages($user);
+        $entityManager->persist($user);
+        $entityManager->flush();
+
         return $this->render('message/received.html.twig', [
             'messages' => $messages,
+            
         ]);
     }
 

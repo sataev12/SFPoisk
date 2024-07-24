@@ -190,6 +190,7 @@ nav .deposer a:hover {
 }
 
 /* Styles pour les catégories */
+/* ---------------------------------------------------------------------- */
 .ceteg-titre{
     display: flex;
     flex-direction: column;
@@ -237,7 +238,7 @@ nav .deposer a:hover {
 
 
 
-/* Styles pour la page de détail d'une annonce */
+/* -------------Styles pour la page de détail d'une annonce --------------*/
 .annonce-detail {
     max-width: 800px;
     margin: 0 auto;
@@ -384,7 +385,7 @@ nav .deposer a:hover {
 }
 
 
-/* Styles pour le modal d'image */
+/* ----------------------Styles pour le modal d'image ---------------------*/
 .image-modal {
     position: fixed;
     top: 0;
@@ -419,10 +420,11 @@ nav .deposer a:hover {
     cursor: pointer;
 }
 
-/* Les styles pour le panneau utilisateur et le panneau d'administration */
+/* --Les styles pour le panneau utilisateur et le panneau d'administration ---*/
 
 .container {
     display: flex;
+    min-height: 100vh;
 }
 
 .sidebar {
@@ -463,7 +465,7 @@ nav .deposer a:hover {
     padding: 20px;
 }
 
-/* Styles pour la page de connexion  */
+/* ------------------ Styles pour la page de connexion  ---------------------*/
 
 .login-container {
     display: flex;
@@ -521,7 +523,7 @@ nav .deposer a:hover {
     text-decoration: underline;
 }
 
-/* Styles pour la table des signalements */
+/* -----------------Styles pour la table des signalements------------------- */
 .styled-table {
     width: 100%;
     border-collapse: collapse;
@@ -580,7 +582,7 @@ nav .deposer a:hover {
     background-color: #007f63;
 }
 
-/* Styles pour la liste des utilisateurs */
+/* ----------------Styles pour la liste des utilisateurs------------------ */
 
 .user-table {
     width: 100%;
@@ -624,7 +626,7 @@ nav .deposer a:hover {
     background-color: #007bff;
 }
 
-/* Styles pour la liste des categories */
+/* ---------------------Styles pour la liste des categories---------------- */
 
 .styled-table {
     width: 100%;
@@ -687,7 +689,7 @@ nav .deposer a:hover {
     display: inline-block;
 }
 
-/* Styles pour la pagination */
+/* -----------------------Styles pour la pagination----------------------- */
 
 .pagination {
     display: flex;
@@ -713,7 +715,13 @@ nav .deposer a:hover {
     border: 1px solid #00AAFF;
 }
 
-/* Les styles pour information d'utilisateurs */
+/* -------------------Les styles pour information d'utilisateurs------------- */
+.container-user {
+    height: 100vh;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
 
 .user-info-container{
     max-width: 800px;
@@ -810,6 +818,242 @@ nav .deposer a:hover {
 .block-evaluation .btn-sabmit:hover {
     background-color: #008CBA;
 }
+
+/* Boutton de nouveau message */
+.btn-message{
+    display: flex;
+    gap: 4px;
+}
+
+ .btn-message p {
+    color: red;
+ }
+
+ .badge-message {
+    color: red;
+ }
+
+ /* Les styles pour la page des messages reçu */
+
+ .received-messages {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+ }
+
+ .received-messages h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #333;
+ }
+
+ .message-list{
+    list-style-type: none;
+    padding: 0;
+ }
+
+.message-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s;
+}
+
+.message-item:hover {
+    background-color: #f1f1f1;
+}
+
+.message-sender {
+    display: block;
+    font-size: 1.2em;
+    color: #007bff;
+}
+
+.message-content {
+    margin: 10px 0;
+}
+
+.message-date {
+    display: block;
+    color: #666;
+    margin-top: 5px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.mark-read {
+    background-color: #28a745;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.mark-read:hover {
+    background-color: #218838;
+    transform: scale(1.05);
+}
+
+.msg-sent {
+    list-style-type: none;
+}
+
+/* Les styles pour Footer */
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+.footer-content a {
+    color: #00AAFF;
+    text-decoration: none;
+}
+
+.footer-content a:hover {
+    text-decoration: underline;
+}
+
+/* Les styles pour la formulaire d'ajout d'annonce */
+.form-annonce-block {
+    height: 100vh;
+}
+.form-inline-annonce {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    margin: 1em 0;
+}
+
+.form-control-annonce {
+    width: 100%;
+    height: 2.5em;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 0.5em;
+    font-size: 1em;
+    transition: border-color 0.3s;
+}
+.form-control-annonce:focus {
+    border-color: #00AAFF;
+    outline: none;
+}
+.btn-valider-annonce {
+    width: 100%;
+    height: 2.5em;
+    background-color: #00AAFF;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.btn-valider-annonce:hover {
+    background-color: #008CBA;
+}
+.row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1em;
+}
+
+.col-sm {
+    flex: 1;
+    margin-right: 1em;
+}
+
+.col-sm:last-child {
+    margin-right: 0;
+}
+
+/* ----------Les styles pour la section des favoris-------------------- */
+.favoris-block{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.favoris-block h1 {
+    color: #333;
+}
+
+.favoris {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    margin: 2em 0;
+}
+
+.favoris .annonce-favori {
+    display: flex;
+    align-items: baseline;
+    gap: 7em;
+    background-color: rgba(219, 209, 209, 0.24);
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 1em;
+    transition: box-shadow 0.3s;
+}
+.favoris .annonce-favori:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.favoris .annonce-favori h2 {
+    font-size: 1.5em;
+    margin-bottom: 0.5em;
+}
+
+.favoris .annonce-favori p {
+    margin: 0.5em 0;
+}
+
+.favoris .annonce-favori a {
+    display: inline-block;
+    margin-top: 1em;
+    padding: 0.3em 0.6em; /* Réduire le padding */
+    background-color: #00AAFF;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    font-size: 0.9em; /* Réduire la taille de la police */
+}
+
+.favoris .annonce-favori a:hover {
+    background-color: #008CBA;
+}
+
 
 
 

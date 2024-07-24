@@ -86,6 +86,13 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->flush();
     }
 
+    public function updateNewMessages(User $user) 
+    {
+        $user->setNouveauxMessages(null);
+        /*$this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();*/
+    } 
+
     // Methode d'anonymisation
     public function anonymizeUser(User $user): void
     {

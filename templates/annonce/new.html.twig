@@ -1,30 +1,31 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}Ajouter une annonce!{% endblock %}
 
 {% block body %}
-    {% if edit %}
-        <h1>Editer une annonce</h1>
-    {% else %}
-        <h1>Ajouter une annonce</h1>
-    {% endif %}
-
-    {# {{ form (formAddAnnonce)}}  #}
-
-    {{ form_start(formAddAnnonce) }}
-        <div class="row">
-            <div class="col-sm">
-                {{ form_row(formAddAnnonce.titre)}}
+    <div class="form-annonce-block">
+        {% if edit %}
+            <h1>Editer une annonce</h1>
+        {% else %}
+            <h1>Ajouter une annonce</h1>
+        {% endif %}
+    
+        {# {{ form (formAddAnnonce)}}  #}
+    
+        {{ form_start(formAddAnnonce, {'attr': {'class': 'form-inline-annonce'}}) }}
+            <div class="row">
+                <div class="col-sm">
+                    {{ form_row(formAddAnnonce.titre, {'attr': {'class': 'form-control-annonce'}})}}
+                </div>
+                <div class="col-sm">
+                    {{ form_row(formAddAnnonce.ville, {'attr': {'class': 'form-control-annonce'}})}}
+                </div>
             </div>
-            <div class="col-sm">
-                {{ form_row(formAddAnnonce.ville)}}
-            </div>
-        </div>
-        {{ form_row(formAddAnnonce.prix)}}
-        {{ form_row(formAddAnnonce.description)}}
-        {{ form_row(formAddAnnonce.publier)}}
-        {{ form_row(formAddAnnonce.categorie)}}
-        {{ form_row(formAddAnnonce.Valider)}}
-
-    {{ form_end(formAddAnnonce)}}
+            {{ form_row(formAddAnnonce.prix, {'attr': {'class': 'form-control-annonce'}})}}
+            {{ form_row(formAddAnnonce.description, {'attr': {'class': 'form-control-annonce'}})}}
+            {{ form_row(formAddAnnonce.categorie, {'attr': {'class': 'form-control-annonce'}})}}
+            {{ form_row(formAddAnnonce.images, {'attr': {'class': 'form-control-annonce'}}) }}
+            {{ form_row(formAddAnnonce.Valider, {'attr': {'class': 'btn btn-valider-annonce'}})}}
+    
+        {{ form_end(formAddAnnonce)}}
+    </div>
 {% endblock %}

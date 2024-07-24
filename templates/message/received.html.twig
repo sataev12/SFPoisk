@@ -1,20 +1,23 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Messages reçus</h1>
+    <div class="received-messages">
+        <h1>Messages reçus</h1>
 
-    <ul>
-        {% for message in messages %}
-            <li>
-                <strong>{{ message.expediteur.nom }}</strong>
-                {% if not message.lu %}
-                    <span class="badge bg-warning">Nouveau</span>
-                {% endif %}
-                <p>{{ message.contenu }}</p>
-                <small>{{ message.dateEnvoi|date('d/m/Y H:i') }}</small>
-                <a href="{{ path('read_messages', {id: message.id}) }}" class="btn btn-sm btn-success">Marquer comme lu</a>
-            </li>
-        {% endfor %}
-    </ul>
-    <li><a href="{{ path('app_message_sent') }}">Messages envoyés</a></li>
+        <ul class="message-list">
+            {% for message in messages %}
+                <li class = "message-item">
+                    <strong class="message-sender">{{ message.expediteur.nom }}</strong>
+                    {% if not message.lu %}
+                        <span class="badge bg-warning">Nouveau</span>
+                    {% endif %}
+                    <p class="message-content">{{ message.contenu }}</p>
+                    <small class="message-date">{{ message.dateEnvoi|date('d/m/Y H:i') }}</small>
+                    <a href="{{ path('read_messages', {id: message.id}) }}" class="btn btn-success mark-read">Marquer comme lu</a>
+                </li>
+            {% endfor %}
+        </ul>
+        <li class = "msg-sent"><a href="{{ path('app_message_sent') }}" class="btn btn-primary">Messages envoyés</a></li>
+    </div>
+    
 {% endblock %}

@@ -27,11 +27,11 @@ class AnnonceType extends AbstractType
             // ->add('dateCreation', DateType::class ) gerer dans controller
             ->add('ville', TextType::class)
             ->add('prix', IntegerType::class)
-            ->add('publier', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'nom',
-                'disabled' => true,
-            ])
+            // ->add('publier', EntityType::class, [
+            //     'class' => User::class,
+            //     'choice_label' => 'nom',
+            //     'disabled' => true,
+            // ])
             ->add('categorie', EntityType::class, [
                 'class' => Categorie::class,
                 'choice_label' => 'nom',

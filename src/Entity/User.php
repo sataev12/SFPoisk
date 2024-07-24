@@ -89,6 +89,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Favoris::class, mappedBy: 'user')]
     private Collection $favoris;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $nouveauxMessages = null;
+
     // #[ORM\Column(type: Types::DECIMAL, precision: 3, scale: 1, nullable: true)]
     // private ?string $rating = null;
 
@@ -422,6 +425,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $favori->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNouveauxMessages(): ?int
+    {
+        return $this->nouveauxMessages;
+    }
+
+    public function setNouveauxMessages(?int $nouveauxMessages): static
+    {
+        $this->nouveauxMessages = $nouveauxMessages;
 
         return $this;
     }

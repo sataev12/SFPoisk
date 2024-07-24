@@ -3,19 +3,20 @@
 {% block title %}Mes Favoris{% endblock %}
 
 {% block body %}
-    <h1>Mes Favoris</h1>
-
-    <div class="annonces">
-        {% for favori in favoris %}
-            <div class="annonce">
-                <h2>{{ favori.annonce.titre }}</h2>
-                <p>{{ favori.annonce.description }}</p>
-                <p><strong>Ville :</strong> {{ favori.annonce.ville }}</p>
-                <p><strong>Prix :</strong> {{ favori.annonce.prix }} €</p>
-                <p><a href="{{ path('show_annonce', {'id': favori.annonce.id}) }}">Voir l'annonce</a></p>
-            </div>
-        {% else %}
-            <p>Aucune annonce en favoris</p>
-        {% endfor %}
+    <div class="favoris-block">
+        <h1>Mes Favoris</h1>
+    
+        <div class="favoris">
+            {% for favori in favoris %}
+                <div class="annonce-favori">
+                    <h2><a href="{{ path('show_annonce', {'id': favori.annonce.id}) }}">{{ favori.annonce.titre }} </a></h2>
+                    <p><strong>Ville :</strong> {{ favori.annonce.ville }}</p>
+                    <p><strong>Prix :</strong> {{ favori.annonce.prix }} €</p>
+                    <p><a href="{{ path('show_annonce', {'id': favori.annonce.id}) }}">Voir l'annonce</a></p>
+                </div>
+            {% else %}
+                <p>Aucune annonce en favoris</p>
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}

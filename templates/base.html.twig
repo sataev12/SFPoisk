@@ -39,7 +39,15 @@
                     <h3>Panneau Utilisateur</h3>
                     <ul>
                         <li><a href="{{ path('app_user', {'id': app.user.id}) }}">Mon Profil</a></li>
-                        <li><a href="{{ path('received_messages') }}">Mes Messages</a></li>
+                        <li>
+                            {% if app.user.nouveauxMessages > 0 %}
+                                <a href="{{ path('received_messages') }}" class="btn-message">
+                                    <p>Messages</p><span class="badge-message"> ({{ app.user.nouveauxMessages }})</span>
+                                </a>
+                            {% else %}
+                                <a href="{{ path('received_messages') }}">Messages</a>
+                            {% endif %}
+                        </li>
                         <li><a href="{{ path('view_favoris') }}">Mes Favoris</a></li>
                         <li><a href="{{ path('app_annonce') }}">Mes Annonces</a></li>
                     </ul>
@@ -61,4 +69,26 @@
             <script src="{{ asset('js/script.js') }}"></script>
         {% endblock %}
     </body>
+    <footer>
+        <div class="footer-content">
+            <p>&copy; {{ "now"|date("Y") }} VotreSite. Tous droits réservés.</p>
+            <p>
+                <a href="">Politique de confidentialité</a> |
+                <a href="">Conditions d'utilisation</a>
+            </p>
+            <p>
+                Nous utilisons des cookies pour améliorer votre expérience. En utilisant notre site, vous acceptez notre 
+                <a href="">politique de confidentialité</a>.
+            </p>
+            {# <p>&copy; {{ "now"|date("Y") }} VotreSite. Tous droits réservés.</p>
+            <p>
+                <a href="{{ path('privacy_policy') }}">Politique de confidentialité</a> |
+                <a href="{{ path('terms_of_service') }}">Conditions d'utilisation</a>
+            </p>
+            <p>
+                Nous utilisons des cookies pour améliorer votre expérience. En utilisant notre site, vous acceptez notre 
+                <a href="{{ path('privacy_policy') }}">politique de confidentialité</a>.
+            </p> #}
+        </div>
+    </footer>
 </html>
