@@ -152,8 +152,15 @@ public function index(Request $request, AnnonceRepository $annonceRepository,  C
 
 
     #[Route('/annonce/{id}', name: 'show_annonce')]
-    public function show(Annonce $annonce, Request $request, EntityManagerInterface $entityManager): Response
+    public function show(int $id, Annonce $annonce, Request $request, EntityManagerInterface $entityManager): Response
     {
+        // $annonce = $entityManager->getRepository(Annonce::class)->find($id);
+
+        // if (!$annonce) {
+            
+        //     throw $this->createNotFoundException('Cette annonce n\'existe pas.');
+        // }
+
         $commentaires = $annonce->getCommentaire();
 
         // Créer et gérer le formulaire de commentaire

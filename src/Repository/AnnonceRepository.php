@@ -47,7 +47,7 @@ class AnnonceRepository extends ServiceEntityRepository
 
         if ($keyword) {
             $qb->andWhere('a.titre LIKE :keyword OR a.description LIKE :keyword OR a.ville LIKE :keyword')
-            ->setParameter('keyword', '%' . $keyword . '%');
+                ->setParameter('keyword', '%' . $keyword . '%');
         }
 
         if ($ville) {
@@ -68,12 +68,5 @@ class AnnonceRepository extends ServiceEntityRepository
         return $qb->orderBy('a.dateCreation', 'DESC')
             ->getQuery()
             ->getResult();
-
-        // return $this->createQueryBuilder('a')
-        //     ->andWhere('a.titre LIKE :keyword OR a.description LIKE :keyword OR a.ville LIKE :keyword')
-        //     ->setParameter('keyword', '%' . $keyword . '%')
-        //     ->orderBy('a.dateCreation' , 'DESC')
-        //     ->getQuery()
-        //     ->getResult();
     }
 }
