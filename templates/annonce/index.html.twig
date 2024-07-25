@@ -3,17 +3,49 @@
 
 {% block body %}
 
-<div class="ceteg-titre">
-    <h1>Bienvenue sur le Forum des Petites Annonces !</h1>
-    <div class="categories">
-        {% for categorie in categories %}
-            <div class="nom-categ">
-                <a href="{{ path('annonces_par_categorie', {'id': categorie.id}) }}">{{ categorie.nom }}</a>
-            </div>
-        {% endfor %}
+    <div class="ceteg-titre">
+        <h1>Bienvenue sur le Forum des Petites Annonces !</h1>
+        <div class="categories">
+            {% for categorie in categories %}
+                <div class="nom-categ">
+                    <a href="{{ path('annonces_par_categorie', {'id': categorie.id}) }}">{{ categorie.nom }}</a>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="tre"></div>
     </div>
-    <div class="tre"></div>
-</div>
+
+    {# Carrousel des 5 annonces les plus vues #}
+    <div class="block-slide-comment">
+
+        <div class="carousel-container">
+            <div class="carousel">
+                {% for annonce in annonces|sort((a, b) => b.vues <=> a.vues)|slice(0, 5) %}
+                    <div class="carousel-item">
+                        <a href="{{ path('show_annonce', {'id': annonce.id}) }}">
+                            <img src="{{ asset(annonce.photos|first.url) }}" alt="{{ annonce.titre }}">
+                        </a>
+                        <div class="price-tag">{{ annonce.prix }} €</div>
+                    </div>
+            {% endfor %}
+            </div>
+            <button class="carousel-button prev" onclick="moveCarousel(-1)">&#10094;</button>
+            <button class="carousel-button next" onclick="moveCarousel(1)">&#10095;</button>
+        </div>
+    
+        {# Les derniers commentaires #}
+        <div class="comments-section">
+            <h2>Derniers Commentaires</h2>
+            <ul>
+                {% for commentaire in derniersCommentaires|slice(0, 5) %}
+                    <li class="comment-item">
+                        <strong>{{ commentaire.utilisateur.nom }}:</strong> {{ commentaire.contenu }}
+                        <a href="{{ path('show_annonce', {'id': commentaire.annonce.id}) }}">Voir l'annonce</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
     
 
     {# {% for annonce in annonces %}
@@ -42,6 +74,7 @@
                     <p><strong>Ville :</strong> {{ annonce.ville }}</p>
                     <p><strong>Prix :</strong> {{ annonce.prix }} €</p>
                     <p><strong>Publié : </strong>{{ annonce.dateCreation|date('Y:m:d')}}</p>
+                    <p><i class="fa fa-eye"></i> {{ annonce.vues }} vues</p>
                     {% if app.user %}
                         {% if annonce.id in favorisAnnoncesIds %}
                             <div class="btn-favoris btn-ajoutRetrait">

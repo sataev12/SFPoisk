@@ -44,6 +44,78 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// Page d'acceuil, animation
+document.addEventListener('DOMContentLoaded', function() {
+    const annonces = document.querySelectorAll('.annonce');
+    const options = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, options);
+
+    annonces.forEach(annonce => {
+        observer.observe(annonce);
+    });
+});
+
+// Carrousel 
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialisation du carrousel
+    let currentIndex = 0;
+
+    function moveCarousel(direction) {
+        const items = document.querySelectorAll('.carousel-item');
+        items[currentIndex].style.display = 'none'; // Masquer l'élément actuel
+        items[currentIndex].classList.remove('active'); // Retirer la classe active
+
+        currentIndex = (currentIndex + direction + items.length) % items.length; // Calculer le nouvel index
+        items[currentIndex].style.display = 'block'; // Afficher le nouvel élément
+        items[currentIndex].classList.add('active'); // Ajouter la classe active
+    }
+
+    // Afficher l'élément initial
+    document.querySelectorAll('.carousel-item').forEach((item, index) => {
+        item.style.display = index === currentIndex ? 'block' : 'none';
+    });
+
+    // Gestion des clics sur les boutons de navigation
+    document.querySelector('.carousel-button.prev').addEventListener('click', function() {
+        moveCarousel(-1);
+    });
+
+    document.querySelector('.carousel-button.next').addEventListener('click', function() {
+        moveCarousel(1);
+    });
+
+    // Défilement automatique
+    setInterval(() => {
+        moveCarousel(1);
+    }, 3000); // Changer d'élément toutes les 3 secondes
+});
+
+// Les derniers commentaires pour la page d'acceuil
+
+document.addEventListener('DOMContentLoaded', function() {
+    const commentsSection = document.querySelector('.comments-section');
+    commentsSection.style.opacity = 0;
+    commentsSection.style.transform = 'translateY(20px)';
+
+    setTimeout(() => {
+        commentsSection.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        commentsSection.style.opacity = 1;
+        commentsSection.style.transform = 'translateY(0)';
+    }, 100); // Délai avant l'animation
+});
+
 // Gérer le clic sur le bouton d'ajout/retrait des favoris
 
 

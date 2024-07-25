@@ -15,6 +15,7 @@ use App\Form\CommentaireType;
 use App\Form\SignalementType;
 use App\Repository\AnnonceRepository;
 use App\Repository\CategorieRepository;
+use App\Repository\CommentaireRepository;
 use App\Repository\FavorisRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\SignalementRepository;
@@ -31,7 +32,7 @@ class AnnonceController extends AbstractController
 {
 
 #[Route('/annonce', name: 'app_annonce')]
-public function index(Request $request, AnnonceRepository $annonceRepository,  CategorieRepository $categorieRepository,  PaginatorInterface $paginator,  FavorisRepository $favorisRepository): Response 
+public function index(Request $request, AnnonceRepository $annonceRepository,  CategorieRepository $categorieRepository,  PaginatorInterface $paginator,  FavorisRepository $favorisRepository, CommentaireRepository $commentaireRepository): Response 
 {
     $form = $this->createForm(RechercheType::class);
     $form->handleRequest($request);
@@ -59,13 +60,16 @@ public function index(Request $request, AnnonceRepository $annonceRepository,  C
         }
     }
 
+
     $categories = $categorieRepository->findAll();
+    $derniersCommentaires = $commentaireRepository->findBy([], ['dateCreation' => 'DESC'], 5); // Récupérer les 5 derniers commentaires
 
     return $this->render('annonce/index.html.twig', [
         'annonces' => $annonces,
         'RechercheForm' => $form->createView(),
         'favorisAnnoncesIds' => $favorisAnnoncesIds,
         'categories' => $categories,
+        'derniersCommentaires' => $derniersCommentaires,
     ]);
 }
 
@@ -160,6 +164,10 @@ public function index(Request $request, AnnonceRepository $annonceRepository,  C
             
         //     throw $this->createNotFoundException('Cette annonce n\'existe pas.');
         // }
+
+        // Incrémenter le comteur de vues
+        $annonce->setVues();
+        $entityManager->flush();
 
         $commentaires = $annonce->getCommentaire();
 

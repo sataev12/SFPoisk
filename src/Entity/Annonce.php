@@ -67,6 +67,9 @@ class Annonce
     #[ORM\OneToMany(targetEntity: Favoris::class, mappedBy: 'annonce')]
     private Collection $favoris;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $vues = null;
+
     public function __construct()
     {
         $this->commentaire = new ArrayCollection();
@@ -297,6 +300,18 @@ class Annonce
                 $favori->setAnnonce(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getVues(): ?int
+    {
+        return $this->vues;
+    }
+
+    public function setVues(): static
+    {
+        $this->vues++;
 
         return $this;
     }
