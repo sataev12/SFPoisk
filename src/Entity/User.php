@@ -42,8 +42,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 60)]
     private ?string $nom = null;
 
-    
-
     /**
      * @var Collection<int, Annonce>
      */
@@ -92,8 +90,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?int $nouveauxMessages = null;
 
-    // #[ORM\Column(type: Types::DECIMAL, precision: 3, scale: 1, nullable: true)]
-    // private ?string $rating = null;
+    #[ORM\Column(type: 'float', nullable: true)]
+    private ?float $rating = null;
 
     public function __construct()
     {
@@ -355,8 +353,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-   
-
     /**
      * @return Collection<int, Rating>
      */
@@ -441,5 +437,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-   
+    public function getRating(): ?float
+    {
+        return $this->rating;
+    }
+
+    public function setRating(?float $rating): self
+    {
+        $this->rating = $rating;
+
+        return $this;
+    }
 }

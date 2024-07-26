@@ -39,8 +39,9 @@
             <ul>
                 {% for commentaire in derniersCommentaires|slice(0, 5) %}
                     <li class="comment-item">
-                        <strong>{{ commentaire.utilisateur.nom }}:</strong> {{ commentaire.contenu }}
-                        <a href="{{ path('show_annonce', {'id': commentaire.annonce.id}) }}">Voir l'annonce</a>
+                        <a href="{{ path('show_annonce', {'id': commentaire.annonce.id}) }}">
+                            <strong>{{ commentaire.utilisateur.nom }}:</strong> {{ commentaire.contenu }}
+                        </a>
                     </li>
                 {% endfor %}
             </ul>
@@ -70,22 +71,41 @@
                     {% endif %}
                 </div>
                 <div class="description">
-                    <h2><a href="{{ path('show_annonce', {'id': annonce.id}) }}">{{ annonce.titre }}</a></h2>
-                    <p><strong>Ville :</strong> {{ annonce.ville }}</p>
-                    <p><strong>Prix :</strong> {{ annonce.prix }} €</p>
-                    <p><strong>Publié : </strong>{{ annonce.dateCreation|date('Y:m:d')}}</p>
+                    <h2 class="annonce-title">
+                        <a href="{{ path('show_annonce', {'id': annonce.id}) }}">{{ annonce.titre }}</a>
+                    </h2>
+
+                    <div class="block-general">
+                        <div class="block-text block-txt-btn">
+                            <p class="annonce-city"><strong>Ville :</strong> {{ annonce.ville }}</p>
+                            <p class="annonce-price"><strong>Prix :</strong> {{ annonce.prix }} €</p>
+                            <p><strong>Publié : </strong>{{ annonce.dateCreation|date('Y:m:d')}}</p>
+                        </div>
+                        
+                        
+    
+                        <div class="block-button block-txt-btn">
+                            <button class="btn btn-description" onclick="openDescriptionModal('{{ annonce.description|e('js') }}')">
+                                <i class="fa fa-info-circle"></i> description
+                            </button>
+        
+                            {% if app.user %}
+                                {% if annonce.id in favorisAnnoncesIds %}
+                                    <div class="btn-favoris btn-ajoutRetrait">
+                                        <a href="{{ path('remove_favori', {'id': annonce.id}) }}">Retirer des favoris</a>
+                                    </div>
+                                {% else %}
+                                    <div class="btn-succes btn-ajoutRetrait">
+                                        <a href="{{ path('add_favori', {'id': annonce.id}) }}">Ajouter aux favoris</a>
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+    
+                    </div>
+                   
                     <p><i class="fa fa-eye"></i> {{ annonce.vues }} vues</p>
-                    {% if app.user %}
-                        {% if annonce.id in favorisAnnoncesIds %}
-                            <div class="btn-favoris btn-ajoutRetrait">
-                                <a href="{{ path('remove_favori', {'id': annonce.id}) }}">Retirer des favoris</a>
-                            </div>
-                        {% else %}
-                            <div class="btn-succes btn-ajoutRetrait">
-                                <a href="{{ path('add_favori', {'id': annonce.id}) }}">Ajouter aux favoris</a>
-                            </div>
-                        {% endif %}
-                    {% endif %}
+                    
                 </div>
                 
             </div>

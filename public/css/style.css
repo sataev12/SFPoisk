@@ -111,6 +111,15 @@ nav .deposer a:hover {
     transform: translateY(0);
 }
 
+/* .description {
+    margin: 20px;
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+} */
+
+
 .description p{
     margin-bottom: 0px;
 }
@@ -128,17 +137,94 @@ nav .deposer a:hover {
     border-radius: 9px 0 0 9px;
 }
 
+.annonce-title {
+    font-size: 1.5em;
+    color: #00AAFF;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.annonce-title:hover {
+    color: #008CBA;
+    transform: scale(1.05);
+}
+
+.annonce-price {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #28a745;
+    transition: transform 0.3s;
+}
+
+.annonce-price:hover {
+    transform: scale(1.1);
+}
+
+.price {
+    background-color: rgba(152, 233, 151, 0.5);
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    position: relative;
+}
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.btn-description {
+    background-color: #4CAF50; /* Couleur de fond */
+    color: white; /* Couleur du texte */
+    border: none; /* Pas de bordure */
+    padding: 10px 20px; /* Espacement interne */
+    border-radius: 5px; /* Coins arrondis */
+    transition: background-color 0.3s, transform 0.3s; /* Transition pour l'animation */
+}
+
+.btn-description:hover {
+    background-color: #45a049; /* Couleur au survol */
+    transform: scale(1.05); /* Légère augmentation de la taille */
+}
+
+
+
+
+
+
 /* les buttons pour ajouter aux favoris */
 
 .btn-succes {
     width: 10em;
     height: 2em;
     border-radius: 5px;
-    background-color: green;
+    background-color: #4CAF50;
     color: white;
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn-succes:hover {
+    background-color: #4CAF50; /* Couleur au survol */
+    transform: scale(1.05); /* Légère augmentation de la taille */
 }
 
 .btn-favoris {
@@ -150,7 +236,14 @@ nav .deposer a:hover {
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: background-color 0.3s, transform 0.3s;
 }
+
+.btn-favoris:hover {
+    background-color: #c82333; /* Couleur au survol */
+    transform: scale(1.05); /* Légère augmentation de la taille */
+}
+
 
 /* Formulaire de recherche/categories */
 
@@ -204,6 +297,7 @@ nav .deposer a:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 2em;
 }
 
 .categories {
@@ -211,6 +305,7 @@ nav .deposer a:hover {
     flex-wrap: wrap;
     gap: 1em;
     margin-bottom: 2em;
+    padding: 3em;
 }
 
 .nom-categ {
@@ -328,6 +423,7 @@ nav .deposer a:hover {
     background-color: #008CBA;
 }
 
+
 .comment-section {
     margin-top: 40px;
 }
@@ -397,6 +493,7 @@ nav .deposer a:hover {
 
 
 /* ----------------------Styles pour le modal d'image ---------------------*/
+
 .image-modal {
     position: fixed;
     top: 0;
@@ -831,6 +928,7 @@ nav .deposer a:hover {
 }
 
 /* Boutton de nouveau message */
+
 .btn-message{
     display: flex;
     gap: 4px;
@@ -1069,7 +1167,7 @@ footer {
 .block-slide-comment {
     display: flex;
     justify-content: center;
-    gap: 8em;
+    gap: 3em;
     margin-bottom: 1.5em;
 }
 
@@ -1142,14 +1240,23 @@ footer {
     padding: 32px;
     /* margin-top: 20px; */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    
+    width: 425px; /* Définir une hauteur maximale pour la section */
+    max-height: 250px;
+    overflow-y: hidden; /* Ajouter un défilement vertical si nécessaire */
 }
+ .comments-section ul {
+    list-style-type: none;
+ }
 
 .comments-section h2 {
     margin-bottom: 10px;
 }
 
 .comment-item {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 370px;
     margin-bottom: 10px;
     transition: transform 0.3s;
 }
@@ -1159,13 +1266,9 @@ footer {
 }
 
 .comment-item a {
-    color: #00AAFF;
     text-decoration: none;
 }
 
-.comment-item a:hover {
-    text-decoration: underline;
-}
 
 
 

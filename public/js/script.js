@@ -116,6 +116,38 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 100); // Délai avant l'animation
 });
 
+// Les annonce dans une page d'acceuil
+
+document.addEventListener('DOMContentLoaded', function() {
+    const prices = document.querySelectorAll('.annonce-price');
+
+    prices.forEach(price => {
+        price.addEventListener('mouseover', function() {
+            this.style.transition = 'transform 0.3s';
+            this.style.transform = 'scale(1.1)';
+        });
+
+        price.addEventListener('mouseout', function() {
+            this.style.transform = 'scale(1)';
+        });
+    });
+});
+
+// Gérer le modal pour afficher la description de l'annonce
+
+function openDescriptionModal(description) {
+    const modal = document.createElement('div');
+    modal.classList.add('modal');
+    modal.innerHTML = `
+        <div class="modal-content">
+            <span class="close-button" onclick="this.parentElement.parentElement.remove()">&times;</span>
+            <p>${description}</p>
+        </div>
+    `;
+    document.body.appendChild(modal);
+}
+
+
 // Gérer le clic sur le bouton d'ajout/retrait des favoris
 
 
