@@ -26,7 +26,7 @@ class UserController extends AbstractController
             'averageRating' => $averageRating,
         ]);
     }
-
+    // Rating des utilisateurs
     #[Route('/user/rate/{id}', name: 'user_rate')]
     public function rate(User $user, Request $request, EntityManagerInterface $entityManager): Response
     {

@@ -151,3 +151,20 @@ function openDescriptionModal(description) {
 // Gérer le clic sur le bouton d'ajout/retrait des favoris
 
 
+
+document.addEventListener('DOMContentLoaded', function() {
+    if (!document.cookie.includes('user_cookie_consent=true')) {
+        document.getElementById('cookie-consent-banner').style.display = 'block';
+    }
+
+    document.getElementById('accept-cookies').addEventListener('click', function() {
+        document.cookie = "user_cookie_consent=true; path=/; max-age=" + (365 * 24 * 60 * 60);
+        document.getElementById('cookie-consent-banner').style.display = 'none';
+    });
+
+    document.getElementById('decline-cookies').addEventListener('click', function() {
+        document.cookie = "user_cookie_consent=; path=/; max-age=0";
+        document.getElementById('cookie-consent-banner').style.display = 'none';
+    });
+});
+

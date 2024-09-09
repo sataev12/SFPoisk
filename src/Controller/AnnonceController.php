@@ -42,7 +42,7 @@ public function index(Request $request, AnnonceRepository $annonceRepository,  C
     $minPrix = $form->get('minPrix')->getData();
     $maxPrix = $form->get('maxPrix')->getData();
     
-    $query = $keyword ? $annonceRepository->rechercheAnnonce($keyword, $ville, $minPrix, $maxPrix) : $annonceRepository->findBy([], ['dateCreation' => 'DESC']);
+    $query = $annonceRepository->rechercheAnnonce($keyword, $ville, $minPrix, $maxPrix);
 
     $annonces = $paginator->paginate(
         $query, // Query or array
@@ -89,61 +89,95 @@ public function index(Request $request, AnnonceRepository $annonceRepository,  C
             'categories' => $categories,
         ]);
     }
-
     #[Route('/annonce/new', name: 'new_annonce')]
-    #[Route('/annonce/{id}/edit', name: 'edit_annonce')]
-    public function new_edit(Annonce $annonce = null, Request $request, EntityManagerInterface $entityManager): Response
-    {
+#[Route('/annonce/{id}/edit', name: 'edit_annonce')]
+// Ces deux annotations de route définissent deux URL différentes pour la même action du contrôleur : 
+// une pour créer une nouvelle annonce (/annonce/new) et une autre pour éditer une annonce existante (/annonce/{id}/edit).
 
-        if(!$annonce){
-            $annonce = new Annonce();
-            $annonce->setPublier($this->getUser()); // Définir l'utilisateur courant comme auteur
+public function new_edit(Annonce $annonce = null, Request $request, EntityManagerInterface $entityManager): Response
+{
+    // Cette fonction accepte une entité Annonce (qui peut être null si aucune annonce n'existe),
+    // une requête HTTP, et l'EntityManager pour la gestion des entités.
 
-        }
+    if(!$annonce){
+        $annonce = new Annonce();
+        // Si aucune annonce n'est passée à la fonction (donc si $annonce est null), 
+        // une nouvelle instance de l'entité Annonce est créée.
+
+        $annonce->setPublier($this->getUser());
+        // Définir l'utilisateur actuellement connecté comme auteur de l'annonce.
+    }
+    
+    $annonce->setDateCreation(new \DateTime());
+    // Met à jour la date de création de l'annonce avec la date actuelle.
+
+    $form = $this->createForm(AnnonceType::class, $annonce);
+    // Crée un formulaire basé sur la classe AnnonceType, prérempli avec les données de l'entité Annonce.
+
+    $form->handleRequest($request);
+    // Traite la requête HTTP et remplit le formulaire avec les données soumises.
+
+    if($form->isSubmitted() && $form->isValid()) {
+        // Vérifie si le formulaire a été soumis et s'il est valide.
         
-        $annonce->setDateCreation(new \DateTime()); // Régler automatiquement la date de création à aujourd'hui
-        $form = $this->createForm(AnnonceType::class, $annonce);
+        $annonce = $form->getData();
+        // Récupère les données de l'entité Annonce à partir du formulaire.
 
-        $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()) {
-            $annonce = $form->getData();
-            // Prepare PDO
-            $entityManager->persist($annonce);
+        $entityManager->persist($annonce);
+        // Prépare l'entité Annonce pour être sauvegardée dans la base de données.
 
-            // Gerer le téléchargement des images
-            $imageFiles = $form->get('images')->getData();
+        $imageFiles = $form->get('images')->getData();
+        // Récupère les fichiers d'image téléchargés à partir du formulaire.
 
-            foreach($imageFiles as $imageFile) {
-                $originalFileName = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $newFileName = uniqid() . '.' . $imageFile->guessExtension();
+        foreach($imageFiles as $imageFile) {
+            // Parcourt chaque fichier d'image soumis dans le formulaire.
 
-                try {
-                    $imageFile->move(
-                        $this->getParameter('images_directory'),
-                        $newFileName
-                    );
-                } catch (FileException $e) {
-                    // Handle exception if something happens during file upload
-                }
+            $originalFileName = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+            // Récupère le nom de fichier original sans extension.
 
-                $photo = new Photo();
-                $photo->setUrl('/img/' . $newFileName);
-                $photo->setAnnonce($annonce);
-                $entityManager->persist($photo);
+            $newFileName = uniqid() . '.' . $imageFile->guessExtension();
+            // Génère un nom de fichier unique en utilisant uniqid() et conserve l'extension d'origine.
+
+            try {
+                $imageFile->move(
+                    $this->getParameter('images_directory'),
+                    $newFileName
+                );
+                // Déplace le fichier téléchargé dans le répertoire désigné pour les images (images_directory) 
+                // avec le nouveau nom de fichier.
+
+            } catch (FileException $e) {
+                // Capture toute exception pouvant survenir lors du téléchargement du fichier et traite l'erreur.
             }
 
+            $photo = new Photo();
+            // Crée une nouvelle instance de l'entité Photo.
 
-            // execute PDO
-            $entityManager->flush();
+            $photo->setUrl('/img/' . $newFileName);
+            // Définit l'URL de la photo basée sur le chemin relatif et le nouveau nom de fichier.
 
-            return $this->redirectToRoute('app_annonce');
+            $photo->setAnnonce($annonce);
+            // Associe la photo à l'annonce actuelle.
+
+            $entityManager->persist($photo);
+            // Prépare l'entité Photo pour être sauvegardée dans la base de données.
         }
 
-        return $this->render('annonce/new.html.twig', [
-            'formAddAnnonce' => $form,
-            'edit' => $annonce->getId()
-        ]);
+        $entityManager->flush();
+        // Exécute toutes les opérations de sauvegarde en attente (persist) dans la base de données.
+
+        return $this->redirectToRoute('app_annonce');
+        // Redirige l'utilisateur vers la route 'app_annonce' après la soumission et la sauvegarde de l'annonce.
     }
+
+    return $this->render('annonce/new.html.twig', [
+        'formAddAnnonce' => $form,
+        'edit' => $annonce->getId()
+    ]);
+    // Affiche la vue Twig 'annonce/new.html.twig', en passant le formulaire à la vue 
+    // ainsi que l'identifiant de l'annonce si elle est en mode édition.
+}
+
 
     #[Route('/annonce/{id}/delete', name: 'delete_annonce')]
     public function delete(Annonce $annonce, EntityManagerInterface $entityManager)

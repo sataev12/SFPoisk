@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
+{# Étend le template de base 'base.html.twig'. Cela permet d'hériter de la structure. #}
 {% block title %}Ajouter une annonce!{% endblock %}
-
+{# Définit le titre de la page en utilisant le bloc 'title'. Ce titre sera affiché dans l'onglet du navigateur. #}
 {% block body %}
     <div class="form-annonce-block">
         {% if edit %}
@@ -8,24 +9,30 @@
         {% else %}
             <h1>Ajouter une annonce</h1>
         {% endif %}
-    
-        {# {{ form (formAddAnnonce)}}  #}
-    
+        {# Condition Twig : Si la variable 'edit' est vraie, on affiche "Editer une annonce", sinon on affiche "Ajouter une annonce".
+           La variable 'edit' est définie dans le contrôleur, ce qui permet de savoir si on est en mode édition ou ajout. #}
         {{ form_start(formAddAnnonce, {'attr': {'class': 'form-inline-annonce'}}) }}
+        {# 'form_start' commence le formulaire en créant la balise <form> HTML avec les attributs spécifiés.
+           Le formulaire est lié à l'objet 'formAddAnnonce', qui est passé depuis le contrôleur. #}
             <div class="row">
                 <div class="col-sm">
-                    {{ form_row(formAddAnnonce.titre, {'attr': {'class': 'form-control-annonce'}})}}
+                    {{ form_row(formAddAnnonce.titre, {'attr': {'class': 'form-control-annonce'}}) }}
                 </div>
                 <div class="col-sm">
-                    {{ form_row(formAddAnnonce.ville, {'attr': {'class': 'form-control-annonce'}})}}
+                    {{ form_row(formAddAnnonce.ville, {'attr': {'class': 'form-control-annonce'}}) }}
                 </div>
             </div>
-            {{ form_row(formAddAnnonce.prix, {'attr': {'class': 'form-control-annonce'}})}}
-            {{ form_row(formAddAnnonce.description, {'attr': {'class': 'form-control-annonce'}})}}
-            {{ form_row(formAddAnnonce.categorie, {'attr': {'class': 'form-control-annonce'}})}}
+            {# Affichage des champs 'titre' et 'ville' dans une disposition en deux colonnes. 
+               'form_row' est utilisé pour afficher un champ spécifique du formulaire, en incluant son label, son champ input, et les erreurs.   #}
+            {{ form_row(formAddAnnonce.prix, {'attr': {'class': 'form-control-annonce'}}) }}{# Affichage du champ 'prix'#}
+            {{ form_row(formAddAnnonce.description, {'attr': {'class': 'form-control-annonce'}}) }}{# Affichage du champ 'description'#}
+            {{ form_row(formAddAnnonce.categorie, {'attr': {'class': 'form-control-annonce'}}) }}{# Affichage du champ 'categorie'#}
             {{ form_row(formAddAnnonce.images, {'attr': {'class': 'form-control-annonce'}}) }}
-            {{ form_row(formAddAnnonce.Valider, {'attr': {'class': 'btn btn-valider-annonce'}})}}
-    
-        {{ form_end(formAddAnnonce)}}
+            {# Affichage du champ 'images', qui permet de télécharger des fichiers. 'form_row' gère le champ de téléchargement de fichiers#}
+            {{ form_row(formAddAnnonce.Valider, {'attr': {'class': 'btn btn-valider-annonce'}}) }}{#'Valider' qui permet de soumettre le formulaire.#}
+        {{ form_end(formAddAnnonce) }}
+        {# 'form_end' termine le formulaire en fermant la balise <form> et gère automatiquement les éventuels jetons CSRF 
+        (protection contre les attaques Cross-Site Request Forgery). #}
     </div>
-{% endblock %}
+{% endblock %}{# Fin du bloc 'body'#}
+
