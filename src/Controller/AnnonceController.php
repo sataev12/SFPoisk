@@ -182,6 +182,11 @@ public function new_edit(Annonce $annonce = null, Request $request, EntityManage
     #[Route('/annonce/{id}/delete', name: 'delete_annonce')]
     public function delete(Annonce $annonce, EntityManagerInterface $entityManager)
     {
+        // Remove related photos
+        foreach ($annonce->getPhotos() as $photo) {
+            $entityManager->remove($photo);
+        }
+
         $entityManager->remove($annonce);
         $entityManager->flush();
 
@@ -192,12 +197,12 @@ public function new_edit(Annonce $annonce = null, Request $request, EntityManage
     #[Route('/annonce/{id}', name: 'show_annonce')]
     public function show(int $id, Annonce $annonce, Request $request, EntityManagerInterface $entityManager): Response
     {
-        // $annonce = $entityManager->getRepository(Annonce::class)->find($id);
+         $annonce = $entityManager->getRepository(Annonce::class)->find($id);
 
-        // if (!$annonce) {
+         if (!$annonce) {
             
-        //     throw $this->createNotFoundException('Cette annonce n\'existe pas.');
-        // }
+             throw $this->createNotFoundException('Cette annonce n\'existe pas.');
+         }
 
         // Incrémenter le comteur de vues
         $annonce->setVues();

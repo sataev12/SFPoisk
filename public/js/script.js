@@ -26,6 +26,17 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// Pour sidebar
+function openNav() {
+    document.getElementById("mySidenav").style.width = "100%";
+  }
+  
+  function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+  }
+
+
+
 // Pour le classement  des utilisateurs
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -71,7 +82,6 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('DOMContentLoaded', function() {
     // Initialisation du carrousel
     let currentIndex = 0;
-
     function moveCarousel(direction) {
         const items = document.querySelectorAll('.carousel-item');
         items[currentIndex].style.display = 'none'; // Masquer l'élément actuel
@@ -81,21 +91,17 @@ document.addEventListener('DOMContentLoaded', function() {
         items[currentIndex].style.display = 'block'; // Afficher le nouvel élément
         items[currentIndex].classList.add('active'); // Ajouter la classe active
     }
-
     // Afficher l'élément initial
     document.querySelectorAll('.carousel-item').forEach((item, index) => {
         item.style.display = index === currentIndex ? 'block' : 'none';
     });
-
     // Gestion des clics sur les boutons de navigation
     document.querySelector('.carousel-button.prev').addEventListener('click', function() {
         moveCarousel(-1);
     });
-
     document.querySelector('.carousel-button.next').addEventListener('click', function() {
         moveCarousel(1);
     });
-
     // Défilement automatique
     setInterval(() => {
         moveCarousel(1);

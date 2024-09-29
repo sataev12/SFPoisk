@@ -7,7 +7,8 @@
 body {
     margin: 0;
     padding: 0;
-    height: 100vh;
+    min-height: 100vh;
+    font-size: 16px;
 }
 
 a, div {
@@ -23,6 +24,7 @@ nav {
     align-items: center;
     padding: 1em;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
 }
 
 nav ul {
@@ -529,10 +531,16 @@ nav .deposer a:hover {
 }
 
 /* --Les styles pour le panneau utilisateur et le panneau d'administration ---*/
-
+.open-btn-sidebar{
+    display: none;
+}
+.closebtn{
+    display: none;
+}
 .container {
     display: flex;
     min-height: 100vh;
+    overflow: hidden;
 }
 
 .sidebar {
@@ -572,6 +580,22 @@ nav .deposer a:hover {
     flex: 1;
     padding: 20px;
 }
+.close-pannel{
+    display: none;
+}
+
+/* .nav-indicator{
+    display: none;
+  }
+  .nav-deconnexion{
+    display: none;
+  }
+  .nav-connexion{
+    display: none;
+  }
+  .nav-enregistrement{
+    display: none;
+  } */
 
 /* ------------------ Styles pour la page de connexion  ---------------------*/
 
@@ -1029,7 +1053,7 @@ nav .deposer a:hover {
 
 /* Les styles pour Footer */
 
-footer {
+/*footer {
     background-color: #333;
     color: white;
     text-align: center;
@@ -1037,10 +1061,12 @@ footer {
     position: relative;
     bottom: 0;
     width: 100%;
+    overflow: hidden;
 }
 
 .footer-content {
     max-width: 800px;
+    width: auto;
     margin: 0 auto;
 }
 .footer-content a {
@@ -1050,7 +1076,7 @@ footer {
 
 .footer-content a:hover {
     text-decoration: underline;
-}
+}*/
 
 /* Les styles pour la formulaire d'ajout d'annonce */
 .form-annonce-block {
@@ -1336,6 +1362,7 @@ footer {
     position: relative;
     height: auto;
     background-color: #070617;
+    overflow: hidden;
   }
   .footer .col {
     width: 190px;
@@ -1403,44 +1430,244 @@ footer {
     .social h1 {
       margin: 0px;
     }
-  }
-  @media only screen and (max-width: 950px) {
-    .footer .col {
-      width: 33%;
-    }
-    .footer .col h1 {
-      font-size: 14px;
-    }
-    .footer .col ul li {
-      font-size: 13px;
-    }
-  }
-  @media only screen and (max-width: 500px) {
-      .footer .col {
-        width: 50%;
-      }
-      .footer .col h1 {
-        font-size: 14px;
-      }
-      .footer .col ul li {
-        font-size: 13px;
-      }
-  }
-  @media only screen and (max-width: 340px) {
-    .footer .col {
-      width: 100%;
-    }
+
+    
   }
 
 
 
 /* Pour la version mobile */
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 768px) {
+    body{
+        font-size: 14px;
+        
+    }
+    .container{
+        overflow: hidden;
+    }
     .content{
         padding: 0;
+        overflow: hidden;
     }
-  }
+    h1{
+        font-size: 20px;
+    }
+    .block-slide-comment{
+        display: flex;
+        flex-direction: column;
+    }
+    .annonce.visible{
+        max-width: 27em;
+        display: flex;
+        flex-direction: column;
+    }
+    .photos{
+        max-height: 160px;
+    }
+    .description {
+        display: flex;
+        flex-direction: row;
+        gap: 2em;
+        align-items: center;
+        margin-bottom: 1em;
+    }
+    .photos {
+        min-width: 100%;
+    }
+    .pagination {
+        margin-bottom: 3em;
+    }
+    .col.social{
+        max-width: 12em;
+    }
+    nav .logo{
+        display: none;
+    }
+    .form-inline{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2em;
+    }
+    .categories{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-column-gap: 10px;
+        grid-row-gap: 1em;
+    }
+    .ceteg-titre{
+        text-align: center;
+    }
+    .block-text{
+        display: none;
+    }
+    .btn-description{
+        min-width: 10.5em;
+    }
+    .block-button{
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+    }
+    /* pour sidebar */
+    .sidebar {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: -55px;
+        background-color: #111;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+        text-align:center;
+      }
+      
+      .sidebar li {
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+        transition: 0.3s;
+      
+      }
+      
+      .sidebar li:hover{
+        color: #f1f1f1;
+      }
+      
+      .sidebar .closebtn {
+        color: white;
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+      }
+      .open-btn-sidebar {
+        display: block;
+      }
+      .closebtn{
+        display: block;
+      }
+      .nav-indicator{
+        display: none;
+      }
+      .nav-deconnexion{
+        display: none;
+      }
+      .nav-connexion{
+        display: none;
+      }
+      .nav-enregistrement{
+        display: none;
+      }
+      .close-pannel{
+        display: block;
+    }
+
+    /* card d'annonce */
+    .annonce.visible{
+        display: flex;
+        align-items: center;
+    }
+    /* Liste des signalement */
+    .styled-table, .styled-table thead, .styled-table tbody, .styled-table th, .styled-table td, .styled-table tr {
+        display: block;
+        width: 100%;
+    }
+
+    .styled-table tr {
+        margin-bottom: 15px;
+    }
+
+    .styled-table td {
+        padding-left: 50%;
+        position: relative;
+    }
+
+    .styled-table td:before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        padding-left: 10px;
+        font-weight: bold;
+    }
+
+    .id-table-signalement {
+        font-weight: bold;
+        background-color: #824343;
+        padding: 10px;
+        border-radius: 5px;
+    }
+    .content h1 {
+        display: flex;
+        justify-content: center;
+        padding-top: 2em;
+    }
+    .header-table-signalement th {
+        display: none;
+    }
+    
+    /* Liste des utilisateurs/categories */
+    .user-table, .user-table thead, .user-table tbody, .user-table th, .user-table td, .user-table tr {
+        display: block;
+        width: 100%;
+    }
+
+    .user-table tr {
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+    }
+
+    .user-table td {
+        display: block;
+        text-align: right;
+        position: relative;
+        padding-left: 50%;
+        font-size: 0.9rem;
+    }
+
+    .user-table td:before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        text-align: left;
+        font-weight: bold;
+        font-size: 0.9rem;
+    }
+
+    
+    .btn {
+        display: block;
+        width: 100%;
+        margin: 5px 0;
+        padding: 10px;
+        text-align: center;
+        border-radius: 5px;
+        font-size: 1rem;
+    }
+    .table-categorie td{
+        display: flex;
+        align-items: center;
+    }
+
+    .btn-category-create {
+        margin-top: 2em;
+        margin-bottom: 4em;
+    }
+    .header-table-categorie th{
+        display: none;
+    }
+    .header-tableau-users th {
+        display: none;
+    }
+}
 
 
 

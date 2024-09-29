@@ -18,10 +18,6 @@ class RatingType extends AbstractType
             ->add('rating', HiddenType::class, [
                 'attr' => ['id' => 'rating-value']
             ]);
-            // ->add('user', EntityType::class, [
-            //     'class' => User::class,
-            //     'choice_label' => 'nom',
-            // ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

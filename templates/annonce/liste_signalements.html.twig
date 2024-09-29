@@ -5,8 +5,8 @@
 
     <table class="styled-table">
         <thead>
-            <tr>
-                <th>ID</th>
+            <tr class="header-table-signalement">
+                <th class="id-table-signalement">ID</th>
                 <th>Type</th>
                 <th>Contenu</th>
                 <th>Date</th>
@@ -17,12 +17,12 @@
         <tbody>
             {% for signalement in signalements %}
                 <tr>
-                    <td>{{ signalement.id }}</td>
-                    <td>{{ signalement.type }}</td>
-                    <td>{{ signalement.contenu }}</td>
-                    <td>{{ signalement.dateSignalement|date('d-m-Y H:i:s') }}</td>
-                    <td><a href="{{ path('show_annonce', {'id': signalement.annonce.id}) }}">{{ signalement.annonce.titre }}</a></td>
-                    <td>{{ signalement.user.nom }}</td>
+                    <td class="id-table-signalement" data-label="ID">{{ signalement.id }}</td>
+                    <td data-label="Type">{{ signalement.type }}</td>
+                    <td data-label="Contenu">{{ signalement.contenu }}</td>
+                    <td data-label="Date">{{ signalement.dateSignalement|date('d-m-Y H:i:s') }}</td>
+                    <td data-label="Annonce"><a href="{{ path('show_annonce', {'id': signalement.annonce.id}) }}">{{ signalement.annonce.titre }}</a></td>
+                    <td data-label="Auteur">{{ signalement.user.nom }}</td>
                 </tr>
             {% endfor %}
         </tbody>

@@ -19,7 +19,7 @@
     <h1>Liste des catégories</h1>
     <table class="styled-table">
         <thead>
-            <tr>
+            <tr class="header-table-categorie">
                 <th>Nom</th>
                 <th>Modifier</th>
                 <th>Supprimer</th>
@@ -27,13 +27,13 @@
         </thead>
         <tbody>
             {% for categorie in categories %}
-                <tr>
-                    <td>{{ categorie.nom }}</td> 
+                <tr class="table-categorie">
+                    <td data-label="Catégorie">{{ categorie.nom }}</td> 
                     {% if is_granted('ROLE_ADMIN') %}   
-                    <td>
+                    <td data-label="Action">
                             <a href="{{ path('admin_categorie_edit', {'id': categorie.id}) }}" class="btn btn-warning">Modifier</a>    
                     </td>
-                    <td>
+                    <td data-label="Action">
                         <form action="{{ path('admin_categorie_delete', {'id': categorie.id}) }}" method="post" class="d-inline">
                             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ categorie.id) }}">
                             <button class="btn btn-danger">Supprimer</button>
@@ -46,7 +46,7 @@
     </table>
 
     {% if is_granted('ROLE_ADMIN') %}
-        <a href="{{ path('admin_categorie_new') }}" class="btn btn-primary">Créer une nouvelle catégorie</a>
+        <a href="{{ path('admin_categorie_new') }}" class="btn btn-primary btn-category-create">Créer une nouvelle catégorie</a>
     {% else %}
         <p>Vous n'avez pas les droits pour accéder à cette page.</p>
     {% endif %}

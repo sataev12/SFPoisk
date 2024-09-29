@@ -2,20 +2,22 @@
 
 namespace App\Form;
 
+use App\Entity\User;
 use App\Entity\Annonce;
 use App\Entity\Categorie;
-use App\Entity\User;
-use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Component\Form\AbstractType;
+use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Validator\Constraints\All;
 
 class AnnonceType extends AbstractType
 {
@@ -40,7 +42,22 @@ class AnnonceType extends AbstractType
                 'label' => 'Images (JPG, PNG)',
                 'mapped' => false,
                 'multiple' => true,
-                'required' => false, 
+                'required' => false,
+                'constraints' => [
+                    new All([
+                        'constraints' => [
+                            new File([
+                                'maxSize' => '2M', // Limiter la taille du fichier
+                                'mimeTypes' => [
+                                    'image/jpeg',
+                                    'image/png',
+                                    'image/gif',
+                                ],
+                                'mimeTypesMessage' => 'Please upload a valid image file (JPEG, PNG, GIF)',
+                            ]),
+                        ]
+                    ])
+                ], 
             ])
             ->add('Valider', SubmitType::class)
         ;

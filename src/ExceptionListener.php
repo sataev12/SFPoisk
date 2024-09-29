@@ -18,16 +18,16 @@ class ExceptionListener
 
     public function onKernelException(ExceptionEvent $event): void
     {
-        // $exception = $event->getThrowable();
+        $exception = $event->getThrowable();
 
-        // // Vérifier si l'exception est une 404 Not Found
-        // if ($exception instanceof NotFoundHttpException) {
-        //     $response = new Response(
-        //         $this->twig->render('error/404.html.twig', ['message' => $exception->getMessage()]),
-        //         Response::HTTP_NOT_FOUND
-        //     );
+        // Vérifier si l'exception est une 404 Not Found
+        if ($exception instanceof NotFoundHttpException) {
+            $response = new Response(
+                $this->twig->render('error/404.html.twig', ['message' => $exception->getMessage()]),
+                Response::HTTP_NOT_FOUND
+            );
 
-        //     $event->setResponse($response);
-        // }
+            $event->setResponse($response);
+        }
     }
 }

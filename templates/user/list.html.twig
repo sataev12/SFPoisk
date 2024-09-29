@@ -5,7 +5,7 @@
 
     <table class="user-table">
         <thead>
-            <tr>
+            <tr class="header-tableau-users">
                 <th>ID</th>
                 <th>Email</th>
                 <th>Nom</th>
@@ -16,11 +16,11 @@
         <tbody>
             {% for user in users %}
                 <tr>
-                    <td>{{ user.id }}</td>
-                    <td>{{ user.email }}</td>
-                    <td>{{ user.nom }}</td>
-                    <td>{{ user.isBlocked ? 'Oui' : 'Non' }}</td>
-                    <td>
+                    <td data-label="ID">{{ user.id }}</td>
+                    <td data-label="email">{{ user.email }}</td>
+                    <td data-label="nom">{{ user.nom }}</td>
+                    <td data-label="Bloqué">{{ user.isBlocked ? 'Oui' : 'Non' }}</td>
+                    <td data-label="Actions">
                         {% if user.isBlocked %}
                             <a href="{{ path('user_unblock', {'id': user.id}) }}" class="btn btn-unblock">Débloquer</a>
                         {% else %}
